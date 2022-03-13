@@ -24,7 +24,7 @@ conn.sync({ force: true }).then(async () => {
 				released         : el.released
 			};
 		});
-		console.log(diexElements[0]);
+
 		//await Videogame bulkcreate(diexPersonas);
     // [ 'Action', 'Adventure' ], ==> Action, Adventure
 		for (const videogame of diexElements) {

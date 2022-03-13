@@ -3,10 +3,10 @@ const { Op } = require('sequelize');
 const router = express();
 const { Videogame, Genre } = require('../db');
 
-//_______________________ All Characters && Filter By Name______________________________________
+//_____________ All Characters && Filter By Name_________
 async function getAllGames(req, res, next) {
-	console.log('Hola soy el Get de videogames');
 	const { name } = req.query;
+	console.log(name);
 
 	try {
 		if (!name) {
@@ -32,5 +32,28 @@ async function getAllGames(req, res, next) {
 		next(error);
 	}
 }
+//__________ All Characters && Filter By Name___________
 
-module.exports = { getAllGames };
+async function getById(req, res, next) {
+
+	const { idVideogame } = req.params;
+	try {
+		const dbVideogame = await Videogame.findAll({
+			where : {
+				id : idVideogame
+			}
+		});
+		 console.log(dbVideogame[0], ' linea 46 controllers filter ID')
+		if (dbVideogame) {
+			return res.json(dbVideogame)
+			
+		}
+		// aqui deberia preguntar o ir a traer by id a la AIP si no lo encontre en mi db
+		return res.send("NO SE HA ENCONTRAD EL ID INDICADO");
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+}
+
+module.exports = { getAllGames, getById };
