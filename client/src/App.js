@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import './App.css';
 import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
+import Detail from './components/Details/Detail';
 function App() {
 	const dispatch = useDispatch();
 
@@ -17,6 +18,7 @@ function App() {
 			<Routes>
 				<Route exact path="/" element={<Landing />} />
 				<Route exact path="/home" element={<Home />} />
+				<Route exact path="/videogame/:id" element={<Detail />} />
 			</Routes>
 		</div>
 	);

@@ -6,8 +6,6 @@ const { Videogame, Genre } = require('../db');
 //_____________ All Characters && Filter By Name_________
 async function getAllGames(req, res, next) {
 	const { name } = req.query;
-	console.log(name);
-
 	try {
 		if (!name) {
 			const AllGames = await Videogame.findAll();
@@ -32,11 +30,12 @@ async function getAllGames(req, res, next) {
 		next(error);
 	}
 }
-//__________ All Characters && Filter By Name___________
+//__________ Filter By Id___________
 
 async function getById(req, res, next) {
 
 	const { idVideogame } = req.params;
+	console.log( idVideogame, 'SOy getById en controllers')
 	try {
 		const dbVideogame = await Videogame.findAll({
 			where : {

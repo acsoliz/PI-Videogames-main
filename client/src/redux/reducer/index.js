@@ -1,8 +1,9 @@
-import { GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_Db, GET_BY_NAME, GET_DETAILS } from '../actions';
+import { GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_Db, GET_BY_NAME, GET_DETAIL } from '../actions';
 const initialState = {
 	videogames    : [],
 	videogamesAux : [],
-	filters       : []
+	filters       : [],
+	details       : []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -20,11 +21,10 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				videogames : action.payload
 			};
-		case GET_DETAILS:
-			console.log(action.payload, 'Soy GET detailskkkkk'); 
+		case GET_DETAIL:
 			return {
 				...state,
-				videogames : action.payload
+				details : action.payload
 			};
 
 		case FILTER_BY_GENRES:
@@ -41,7 +41,7 @@ export default function rootReducer(state = initialState, action) {
 
 					action.payload === 'All' ? allDbGames :
 					allDbGames.filter((el) => el.db.toString() === action.payload.toString());
-			console.log('Soy el filtro Db', gamesDbFilter);
+
 			return {
 				...state,
 				videogames : gamesDbFilter

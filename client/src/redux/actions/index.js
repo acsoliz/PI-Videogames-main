@@ -5,7 +5,7 @@ export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const FILTER_BY_GENRES = 'FILTER_BY_GENRES'
 export const FILTER_BY_Db = 'FILTER_BY_Db'
-export const GET_DETAILS = 'GET_DETAILS'
+export const GET_DETAIL = 'GET_DETAIL'
 
 
 export const getAllGames = () => {
@@ -43,8 +43,19 @@ export function filterDb(payload) {
 }
 
 
-export const getDetails = (payload) => {
-	return { type: GET_DETAILS}
+export const getDetail = (id) => {
+	return async function(dispatch){
+	try{
+		const details = await axios.get(`http://localhost:3001/videogames/${id}`)
+		return dispatch({
+			type: GET_DETAIL, 
+			payload: details.data
+		})
+	}catch(error){
+		console.log(error);
+	}
+	}
+	
 }
 
 
