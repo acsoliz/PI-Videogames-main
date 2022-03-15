@@ -14,10 +14,11 @@ export default function Detail() {
 		[ dispatch, id ]
 	);
 
-	const details = useSelector((state) => state.details[0]);
-	// console.log('Hi there soy details', details.length);
+	const details = useSelector((state) => state.details);
+	 console.log('Hi there soy details', details);
 	return (
 		<div>
+			<Link to="/home">volver</Link>
 			{
 				details ? <div>
 					<h2 key={id}>{details.name}</h2>
@@ -26,8 +27,7 @@ export default function Detail() {
 					<h4>Released: {details.released}</h4>
 					<h4>Rating: {details.rating}</h4>
 					<h4>Description: {details.description}</h4>
-					<h4>Platforms : {details.platforms}</h4>
-                    <p>HOLAAAA</p>
+					<h4>Platforms : {details.platforms}</h4>                  
 				</div> :
 				<span>Country Not Found</span>}
 		</div>

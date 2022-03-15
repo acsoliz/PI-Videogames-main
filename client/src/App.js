@@ -6,6 +6,7 @@ import './App.css';
 import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import Detail from './components/Details/Detail';
+import Form from './components/Form/Form'
 function App() {
 	const dispatch = useDispatch();
 
@@ -19,6 +20,7 @@ function App() {
 				<Route exact path="/" element={<Landing />} />
 				<Route exact path="/home" element={<Home />} />
 				<Route exact path="/videogame/:id" element={<Detail />} />
+				<Route exact path="/create" element={<Form />} />
 			</Routes>
 		</div>
 	);

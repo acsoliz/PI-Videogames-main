@@ -8,5 +8,7 @@ const genres = require('./genres.js');
 
 router.use('/videogames', videogames);
 //router.use('/genres', genres);
+router.use('/genres',()=>{} );
+
 
 module.exports = router;

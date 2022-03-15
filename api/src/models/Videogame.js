@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
 		'videogame',
 		{
 			id               : {
-				type         : DataTypes.UUID,
+				type         : DataTypes.FLOAT,
 				defaultValue : DataTypes.UUIDV4,
 				primaryKey   : true
 			},
@@ -27,7 +27,6 @@ module.exports = (sequelize) => {
 			},
 			platforms        : {
 				type      : DataTypes.STRING,
-				allowNull : false
 			},
 
 			db               : {
@@ -36,10 +35,11 @@ module.exports = (sequelize) => {
 			},
 			background_image : {
 				type : DataTypes.TEXT
-			},
-			genresString            : {
-				type : DataTypes.STRING
 			}
+			// ,
+			// genresString            : {
+			// 	type : DataTypes.STRING
+			// }
 		},
 		{ timestamps: false }
 	);

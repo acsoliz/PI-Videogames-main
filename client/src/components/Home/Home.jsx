@@ -26,6 +26,10 @@ const Home = () => {
 		<div>
 			<div>
 				<SearchBar />
+				
+				<Link to={'/create'} >
+					Create Videogame
+				</Link>
 				<div>
 					<select onChange={(e) => handleOnChange(e)}>
 						<option value={'All'}>Todos</option>
