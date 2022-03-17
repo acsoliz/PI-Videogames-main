@@ -1,4 +1,12 @@
-import { GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_Db, GET_BY_NAME, GET_DETAIL, ADD_GAME } from '../actions';
+import {
+	GET_VIDEOGAMES,
+	FILTER_BY_GENRES,
+	FILTER_BY_Db,
+	GET_BY_NAME,
+	GET_DETAIL,
+	ADD_GAME,
+	CLEAR_DETAIL
+} from '../actions';
 const initialState = {
 	videogames    : [],
 	videogamesAux : [],
@@ -21,21 +29,27 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				videogames : action.payload
 			};
+		case CLEAR_DETAIL:
+			return {
+				...state,
+				details : []
+			};
 		case GET_DETAIL:
 			return {
 				...state,
 				details : action.payload
 			};
 		case ADD_GAME:
-			return{
+			return {
 				...state
-			}
+			};
 
 		case FILTER_BY_GENRES:
 			const gamesFiltered =
 
 					action.payload === 'All' ? allDbGames :
-					allDbGames.filter((el) => el.genresString.includes(action.payload));
+					allDbGames.filter((el) => el.genres.includes(action.payload));
+
 			return {
 				...state,
 				videogames : gamesFiltered

@@ -7,6 +7,8 @@ export const FILTER_BY_GENRES = 'FILTER_BY_GENRES';
 export const FILTER_BY_Db = 'FILTER_BY_Db';
 export const GET_DETAIL = 'GET_DETAIL';
 export const ADD_GAME = 'ADD_GAME';
+export const CLEAR_DETAIL = 'CLEAR_DETAIL';
+
 
 export const getAllGames = () => {
 	return async (dispatch) => {
@@ -45,10 +47,10 @@ export function filterDb(payload) {
 export const getDetail = (id) => {
 	return async function(dispatch) {
 		try {
-			const details = await axios.get(`${URL_GET}${id}`);
+			const json = await axios.get(`${URL_GET}${id}`);
 			return dispatch({
 				type    : GET_DETAIL,
-				payload : details.data
+				payload : json.data
 			});
 		} catch (error) {
 			console.log(error);
@@ -56,12 +58,19 @@ export const getDetail = (id) => {
 	};
 };
 
+export const clearDetail = (payload)=>{
+	return{
+		type: CLEAR_DETAIL, 
+		payload
+	}
+}
+
 export const createGame = (payload) => {
 	return async function(dispatch) {
-		const newVideoGame = await axios.get(`${URL_GET}`, payload);
+		const json = await axios.get(`${URL_GET}`, payload);
 		return dispatch({
 			type    : ADD_GAME,
-			payload : newVideoGame
+			payload : json
 		});
 	};
 };

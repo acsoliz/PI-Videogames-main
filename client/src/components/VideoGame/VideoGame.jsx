@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function VideoGame({ name, image, genresString, id }) {
+export default function VideoGame({ name, image, genres, id }) {
 	return (
 		<div className="contenedor-card">
 			<Link to={`/videogame/${id}`}>
@@ -10,7 +10,7 @@ export default function VideoGame({ name, image, genresString, id }) {
 			<Link to={`/videogame/${id}`}>
 				<img src={image} width="350px" height="200px" alt="" />
 			</Link>
-			<div>{genresString}</div>
+			<div>{genres}</div>
 		</div>
 	);
 }

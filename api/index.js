@@ -6,7 +6,6 @@ const API_GAMES = 'https://api.rawg.io/api/games?key=';
 const { API_KEY } = process.env;
 
 conn.sync({ force: true }).then(async () => {
-
 	//             ----------------  Lleno la tabla Genres----------------------
 	const AllGenres = await axios(`${API_GENRES}${API_KEY}`);
 
@@ -28,15 +27,15 @@ conn.sync({ force: true }).then(async () => {
 		console.log('ERROR AL CREAR DB GENRES', error);
 	}
 
-	
 	//                  -----------------llenando la tabla VideoGames------------------
 	try {
-		let diexElements = [];
-		const games = await axios(`${API_GAMES}${API_KEY}`);
-		for (let i = 0; i < 5; i++) {
-			diexElements.push(games.data.results[i]);
+		let array = [];
+		for (let i = 1; i < 6; i++) {
+			const resultsArray = await axios(`${API_GAMES}${API_KEY}&page=${i}`);
+			array.push(resultsArray.data.results);
 		}
-		diexElements = diexElements.map((el) => {
+		array = array.flat();
+		array = array.map((el) => {
 			return {
 				id               : el.id,
 				name             : el.name,
@@ -50,8 +49,7 @@ conn.sync({ force: true }).then(async () => {
 			};
 		});
 
-		for (const videogame of diexElements) {
-			// console.log('Soy diex elementos en la posicon videogame dentro del for of',videogame)
+		for (const videogame of array) {
 			let game = await Videogame.create({
 				id               : videogame.id,
 				name             : videogame.name,
@@ -66,7 +64,7 @@ conn.sync({ force: true }).then(async () => {
 				}
 			});
 
-			game.addGenre(genre);
+			game.addGenre(genre); // aqui
 		}
 	} catch (error) {
 		console.log(error);

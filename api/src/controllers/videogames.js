@@ -10,7 +10,27 @@ async function getAllGames(req, res, next) {
 	const { name } = req.query;
 	try {
 		if (!name) {
-			const AllGames = await Videogame.findAll();
+			let AllGames = await Videogame.findAll({
+				include : {
+					model      : Genre,
+					attributes : [ 'name' ],
+					through    : {
+						attributes : []
+					}
+				}
+			});
+			AllGames = AllGames.map((e) => {
+				return {
+					name             : e.dataValues.name,
+					background_image : e.dataValues.background_image,
+					genres           : (e.dataValues.genres.map((e) => e.dataValues.name)).join(', '),
+					id               : e.id,
+					db               : e.db,
+					rating           : e.rating
+				};
+			});
+			// console.log('Soy All Games DETALEEEEEEESSS', AllGames);
+
 			return res.send(AllGames);
 		}
 

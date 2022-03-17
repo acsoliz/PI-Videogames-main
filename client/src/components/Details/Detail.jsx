@@ -1,21 +1,27 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDetail } from '../../redux/actions/index';
+import { getDetail, clearDetail } from '../../redux/actions/index';
 
 export default function Detail() {
 	const dispatch = useDispatch();
 	const { id } = useParams();
+	useEffect(
+		() => {
+			dispatch(clearDetail());
+		},
+		[ dispatch ]
+	);
 
 	useEffect(
 		() => {
 			dispatch(getDetail(id));
 		},
-		[ dispatch, id ]
+		[ dispatch]
 	);
 
 	const details = useSelector((state) => state.details);
-	 console.log('Hi there soy details', details);
+	console.log('Hi there soy details', details);
 	return (
 		<div>
 			<Link to="/home">volver</Link>
@@ -27,7 +33,7 @@ export default function Detail() {
 					<h4>Released: {details.released}</h4>
 					<h4>Rating: {details.rating}</h4>
 					<h4>Description: {details.description}</h4>
-					<h4>Platforms : {details.platforms}</h4>                  
+					<h4>Platforms : {details.platforms}</h4>
 				</div> :
 				<span>Country Not Found</span>}
 		</div>
