@@ -34,7 +34,7 @@ conn.sync({ force: true }).then(async () => {
 			const resultsArray = await axios(`${API_GAMES}${API_KEY}&page=${i}`);
 			array.push(resultsArray.data.results);
 		}
-		array = array.flat();
+		array = array.flat();//
 		array = array.map((el) => {
 			return {
 				id               : el.id,

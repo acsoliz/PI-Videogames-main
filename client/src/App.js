@@ -6,7 +6,7 @@ import './App.css';
 import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import Detail from './components/Details/Detail';
-import Form from './components/Form/Form'
+import Form from './components/Form/Form';
 function App() {
 	const dispatch = useDispatch();
 

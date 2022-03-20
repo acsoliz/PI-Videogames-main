@@ -1,0 +1,15 @@
+.container {
+	width: 10x;
+	height: 30px;
+	overflow: hidden;
+	/* border-style: solid; */
+}
+.button {
+	/* cursor: pointer; */
+	font-size: xx-large;
+    padding: 1rem;
+}
+.button:hover {
+	color: #0000db;
+	cursor: pointer;
+}

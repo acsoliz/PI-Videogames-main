@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express();
-
 const {getAllGames, getById, createGame} = require('../controllers/videogames');
 
 router.get('/', getAllGames) // by Name && VideoGames

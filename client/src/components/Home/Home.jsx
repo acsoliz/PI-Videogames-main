@@ -1,4 +1,4 @@
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import VideoGame from '../VideoGame/VideoGame';
@@ -6,11 +6,11 @@ import SearchBar from '../SearchBar/SearchBar';
 import { getAllGames, filterByGenres, filterDb } from '../../redux/actions/index';
 import s from './Home.module.css';
 import Paginated from '../Paginated/Paginated';
+import AllGames from '../AllGames/AllGames';
 const Home = () => {
 	const dispatch = useDispatch();
-
 	const videogames = useSelector((state) => state.videogames);
-		//--------------mostrar los VIDOGAMES
+	//--------------mostrar los paises
 	function handleOnChange(e) {
 		e.preventDefault();
 		if (e.target.value === '') return dispatch(getAllGames());
@@ -28,8 +28,8 @@ const Home = () => {
 	const [ gamesByPage, setGamesByPage ] = useState(15); // Cuantos paises por page
 	const lastGame = currentPage * gamesByPage;
 	const firstGame = lastGame - gamesByPage;
-	const currentCountries = videogames && videogames.slice(firstGame, lastGame);
-	console.log(currentCountries); // array con nueve paises
+	const currentGame = videogames && videogames.slice(firstGame, lastGame);
+	// console.log(currentCountries); // array con nueve paises
 
 	const paginated = (pageNum) => {
 		setCurrentPage(pageNum);
@@ -39,13 +39,6 @@ const Home = () => {
 	return (
 		<div>
 			<div>
-				<div>
-					<Paginated
-						videogames={videogames?videogames.length:100}
-						gamesByPage={gamesByPage}
-						paginated={paginated}
-					/>
-				</div>		
 				<SearchBar />
 
 				<Link to={'/create'}>Create Videogame</Link>
@@ -67,14 +60,22 @@ const Home = () => {
 						<option value={false}>Not Created</option>
 					</select>
 				</div>
+				<div>
+					<Paginated
+						videogames={videogames && videogames.length}
+						gamesByPage={gamesByPage}
+						paginated={paginated}
+					/>
+				</div>
 				<div className={s.cards}>
-					{
+					<AllGames currentGame={currentGame} />
+					{/* {
 						videogames.length > 0 ? videogames.map((e) => (
 							<div key={e.id}>
 								<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
 							</div>
 						)) :
-						<div>Loading...</div>}
+						<div>Loading...</div>} */}
 				</div>
 			</div>
 		</div>

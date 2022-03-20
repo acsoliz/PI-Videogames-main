@@ -1,11 +1,11 @@
 import s from './Paginated.module.css';
 import React from 'react';
 
-export default function Paginated ({allGames, gamesByPage, paginated}){
+export default function Paginated ({videogames, gamesByPage, paginated}){
     const pageNum = [];
-    console.log("Hola desde el paginadooo!", pageNum)
+    // console.log("Hola desde el paginadooo!", paginated)
 
-    for(var i=1; i<=Math.ceil(allGames / gamesByPage); i++){
+    for(var i=1; i<=Math.ceil(videogames / gamesByPage); i++){
         pageNum.push(i);
     }
 
@@ -13,8 +13,8 @@ export default function Paginated ({allGames, gamesByPage, paginated}){
         <div>
             <div className={s.container}>
                 {pageNum && pageNum.map(e=>(                    
-                        <button key={e} className={s.button}   onClick={()=> paginated(e)}>{e}</button>                    
-                ))}
+                        <label key={e} className={s.button}   onClick={()=> paginated(e)}>  °  </label>                    
+                ))}                
             </div>
         </div>
     )

@@ -12,17 +12,3 @@ module.exports = router;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = { getAllGenres,  };
-

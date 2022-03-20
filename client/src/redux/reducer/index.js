@@ -4,6 +4,7 @@ import {
 	FILTER_BY_Db,
 	GET_BY_NAME,
 	GET_DETAIL,
+	GET_GENRE,
 	ADD_GAME,
 	CLEAR_DETAIL
 } from '../actions';
@@ -11,7 +12,8 @@ const initialState = {
 	videogames    : [],
 	videogamesAux : [],
 	filters       : [],
-	details       : []
+	details       : [],
+	genres        : []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -23,6 +25,11 @@ export default function rootReducer(state = initialState, action) {
 				videogames    : action.payload,
 				videogamesAux : action.payload,
 				filters       : action.payload
+			};
+		case GET_GENRE:
+			return {
+				...state,
+				genres : action.payload
 			};
 		case GET_BY_NAME:
 			return {

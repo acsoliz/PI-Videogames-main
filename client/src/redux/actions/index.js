@@ -8,7 +8,8 @@ export const FILTER_BY_Db = 'FILTER_BY_Db';
 export const GET_DETAIL = 'GET_DETAIL';
 export const ADD_GAME = 'ADD_GAME';
 export const CLEAR_DETAIL = 'CLEAR_DETAIL';
-
+export const API_GENRES = 'http://localhost:3001/genres';
+export const GET_GENRE = 'GET_GENRE';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
@@ -18,6 +19,20 @@ export const getAllGames = () => {
 				type    : GET_VIDEOGAMES,
 				payload : json.data
 			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
+export const getGenres = () => {
+	return async (dispatch) => {
+		try {
+			const json = await axios.get(API_GENRES);
+			return dispatch({
+				type:GET_GENRE,
+				payload: json.data
+
+			})
 		} catch (error) {
 			console.log(error);
 		}
@@ -58,12 +73,12 @@ export const getDetail = (id) => {
 	};
 };
 
-export const clearDetail = (payload)=>{
-	return{
-		type: CLEAR_DETAIL, 
+export const clearDetail = (payload) => {
+	return {
+		type    : CLEAR_DETAIL,
 		payload
-	}
-}
+	};
+};
 
 export const createGame = (payload) => {
 	return async function(dispatch) {
