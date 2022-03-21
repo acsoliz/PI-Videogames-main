@@ -9,16 +9,13 @@ const { API_KEY } = process.env;
 
 async function getAllGenres(req, res, next) {
 	const { genre } = req.query;
-    console.log("NO se donde estoy , soy el error")
 	try {
-		let allgenres = await Genre.findAll({attributes:['name']});
-		console.log(allgenres);
+		let allgenres = await Genre.findAll({ attributes: [ 'name' ] });
 
 		res.send(allgenres);
 	} catch (error) {
 		console.log(error);
 	}
-  
 }
 
 module.exports = { getAllGenres };

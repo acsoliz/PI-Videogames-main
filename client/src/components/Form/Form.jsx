@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllGames, createGame, getGenres } from '../../redux/actions/index';
+import { getAllGames, createGame, getGenres, getPlatforms } from '../../redux/actions/index';
 
 export default function Form() {
 	const dispatch = useDispatch();
@@ -9,7 +9,6 @@ export default function Form() {
 
 	let allGenres = useSelector((state) => state.genres);
 	allGenres = allGenres.map((e) => (e = e.name));
-	console.log('Soy generos ', allGenres);
 	const [ errors, setErrors ] = useState({ state: 'complete Form' });
 	const [ state, setstate ] = useState({
 		name        : '',
@@ -33,12 +32,15 @@ export default function Form() {
 		return alert(`Se agrego ${state.name} con exito!`);
 	}
 
-	// const AllGenres = useSelector((state) => state.AllGenres);
-	// const allPlatforms = use
+
+	const platforms = getPlatforms()
+	console.log(platforms)
+	const [ currentPage, setCurrentPage ] = useState({}); //esto es para PLATFRMS
+
 	useEffect(
 		() => {
 			dispatch(getGenres());
-			// dispatch(getPlatforms())
+			dispatch(getPlatforms())
 		},
 		[ dispatch ]
 	);
@@ -50,7 +52,7 @@ export default function Form() {
 				<h1>CREATE A NEW VIDEOGAME</h1>
 				<form onSubmit={() => handleSubmit()}>
 					{
-						state.name === '' ? <p>llena el campo</p> :
+						state.name === '' ? <p>Debes completar todos los campos :D</p> :
 						null}
 					<div>
 						<label>🅰Name:</label>
@@ -97,10 +99,11 @@ export default function Form() {
 					</div>
 					<br />
 					<div>
-						<label>🔖Genres:{console.log(allGenres)} </label>
+						<label>🔖Genres: </label>
 						<div>
-							<select value={1} onChange={(e)=>handleInputChange}>
-							<option value={1}>--Select genres--</option>
+							<select value={1} onChange={(e) => ({})}>
+								{/* handleGenreChange */}
+								<option value={1}>--Select genres--</option>
 								{allGenres.map((genre, i) => {
 									return (
 										<option key={i} value={i + 1}>
@@ -118,11 +121,16 @@ export default function Form() {
 							<option>--Select platforms--</option>
 						</select>
 					</div>
+					<br />
 					<div>
 						<label>📸image:</label>
-						<select>
-							<option>--Select platforms--</option>
-						</select>
+						<input
+							type="text"
+							name="image"
+							value={state.image}
+							onChange={handleInputChange}
+							placeholder="Ingrese la URL de la imagen"
+						/>
 					</div>
 					<br />
 					<button type="submit">Create Game</button>

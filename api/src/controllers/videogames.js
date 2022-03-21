@@ -23,7 +23,7 @@ async function getAllGames(req, res, next) {
 				return {
 					name             : e.dataValues.name,
 					background_image : e.dataValues.background_image,
-					genres           : (e.dataValues.genres.map((e) => e.dataValues.name)).join(', '),
+					genres           : e.dataValues.genres.map((e) => e.dataValues.name).join(', '),
 					id               : e.id,
 					db               : e.db,
 					rating           : e.rating
@@ -114,4 +114,6 @@ async function createGame(req, res, next) {
 		console.log('No se pudo crear', error);
 	}
 }
+
+
 module.exports = { getAllGames, getById, createGame };
