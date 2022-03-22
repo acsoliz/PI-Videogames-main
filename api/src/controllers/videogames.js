@@ -90,19 +90,55 @@ async function getById(req, res, next) {
 
 // __________ Create VideoGame___________
 async function createGame(req, res, next) {
-	let { name, background_image, description, released, rating, genres, platforms } = req.body;
+	let { name, image, description, released, rating, genres, platforms } = req.body;
+
+	const maxId = await Videogame.max('id');
+	const id = maxId + 10 * Math.random();
+	// console.log("Soy ID MAXXXXX!!", id)
+
+	const errors = [];
+	//verifico Genres
+	if (Array.isArray(genres)) {
+		let errorFound = false;
+		genres.forEach((genre) => {
+			if (typeof genre != 'string') {
+				errorFound = true;
+			}
+		});
+		if (errorFound) errors.push('some of the genres do not exist ');
+	} else {
+		errors.push('Genres is not an Array');
+	}
+	//----verifico NAME
+	if (name == null) errors.push('the name field cannot be empty');
+	//----verifico NAME
+	if (typeof rating != 'number') {
+		errors.push("rating should be an integer number between 1 and 5");
+	}
+	if(released.length < 3 ){
+		errors.push("released should be an string. EJ: '03-15-2018' ");
+	}
+	if(description.length<6){
+		errors.push("must be a string and must contain more than 10 characters ");		
+	}
+	
+
+
 
 	if (!name || !description || !released || !genres) return res.status(400).send('TE FALTA ALGOOOOO!!');
+
 	try {
 		const game = await Videogame.create({
+			id,
 			name,
-			background_image,
+			background_image : image,
 			description,
 			released,
 			rating,
-			platforms
+			platforms,
+			db               : true
 		});
-
+		// console.log("Soy el GAME creado!! ",game)
 		const genre = await Genre.findAll({
 			where : {
 				name : genres
@@ -110,10 +146,10 @@ async function createGame(req, res, next) {
 		});
 		game.addGenre(genre);
 		res.send('Videogame creado con exito');
+		// console.log("Soy el GAME creado!! ",genre)
 	} catch (error) {
 		console.log('No se pudo crear', error);
 	}
 }
-
 
 module.exports = { getAllGames, getById, createGame };

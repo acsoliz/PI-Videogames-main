@@ -8,6 +8,8 @@ import Landing from './components/Landing/Landing';
 import Detail from './components/Details/Detail';
 import Form from './components/Form/Form';
 function App() {
+
+	// ESTO VA DENTRO DE function APP(), antes del return 
 	const dispatch = useDispatch();
 
 	useEffect(() => {

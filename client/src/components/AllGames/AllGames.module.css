@@ -3,6 +3,11 @@
     flex-wrap: wrap;
     max-width: 90%;
     margin: 0 auto;
+    border-radius: 20px;
   
     justify-content: space-evenly;
+}
+
+.filter{
+    filter: drop-shadow(0 0 50px blue);
 }

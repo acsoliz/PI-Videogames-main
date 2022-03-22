@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { getAllGames, filterByGenres, filterDb } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import VideoGame from '../VideoGame/VideoGame';
 import SearchBar from '../SearchBar/SearchBar';
-import { getAllGames, filterByGenres, filterDb } from '../../redux/actions/index';
-import s from './Home.module.css';
 import Paginated from '../Paginated/Paginated';
 import AllGames from '../AllGames/AllGames';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import s from './Home.module.css';
 const Home = () => {
 	const dispatch = useDispatch();
 	const videogames = useSelector((state) => state.videogames);
@@ -38,7 +38,7 @@ const Home = () => {
 
 	return (
 		<div>
-			<div>
+			<div className={s.container}>
 				<SearchBar />
 
 				<Link to={'/create'}>Create Videogame</Link>
@@ -67,8 +67,10 @@ const Home = () => {
 						paginated={paginated}
 					/>
 				</div>
-				<div className={s.cards}>
-					<AllGames currentGame={currentGame} />
+				<div className={s.containerAllGames}>
+					<div >
+						<AllGames currentGame={currentGame} className={s.cards} />
+					</div>
 					{/* {
 						videogames.length > 0 ? videogames.map((e) => (
 							<div key={e.id}>

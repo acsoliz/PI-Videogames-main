@@ -8,8 +8,9 @@ export default function Form() {
 	const history = useNavigate();
 
 	let allGenres = useSelector((state) => state.genres);
+	let allPlatforms = useSelector((state) => state.platforms);
 	allGenres = allGenres.map((e) => (e = e.name));
-	const [ errors, setErrors ] = useState({ state: 'complete Form' });
+	const [ error, setError ] = useState({ state: 'complete Form' });
 	const [ state, setstate ] = useState({
 		name        : '',
 		rating      : 0,
@@ -18,29 +19,60 @@ export default function Form() {
 		genres      : [],
 		platforms   : []
 	});
+	//----------------------->  name, rating, description, release IMAGE
 	const handleInputChange = function(e) {
 		e.preventDefault();
 		setstate({
 			...state,
 			[e.target.name]: e.target.value
 		});
+
+		console.log(state, 'RELEASE, NAME Y RATING !!!');
+		// console.log(state.name,'RELEASE, NAME Y RATING !!!')
+		// console.log(state.rating,'RELEASE, NAME Y RATING !!!')
 	};
-	function handleSubmit() {
+	//------------>  GENERO
+	const handleGenreChange = function(e) {
+		if (!state.genres.includes(e.target.value)) {
+			setstate({
+				...state,
+				genres : [ ...state.genres, e.target.value ]
+			});
+			console.log("i'M ESTATE GENEROO!  ", state, state.genero);
+		}
+	};
+
+	const handleDelete = function(e) {
+		setstate({
+			...state,
+			genres : [ ...state.filter((g) => g != e) ]
+		});
+	};
+
+	//--------------->   PLATFORMS
+	const handlePlatformsChange = function(e) {
+		setstate({
+			...state,
+			platforms : [ ...state.platforms, e.target.value ]
+		});
+		console.log("i'M ESTATE PLATFORMSSS!!!", state.platforms);
+	};
+	// ----------------> POSTEO
+	const handleSubmit = function(e) {
 		if (!state.name || !state.rating || !state.description || !state.release || !state.genres || !state.platforms) {
 			return alert('Debes completar todos los campos');
+		} else {
+			console.log("i'M ESTATEee complete!  ", state);
+			e.preventDefault();
+			dispatch(createGame(state));
+			alert('VIdeoJuego Creado');
 		}
-		return alert(`Se agrego ${state.name} con exito!`);
-	}
-
-
-	const platforms = getPlatforms()
-	console.log(platforms)
-	const [ currentPage, setCurrentPage ] = useState({}); //esto es para PLATFRMS
+	};
 
 	useEffect(
 		() => {
 			dispatch(getGenres());
-			dispatch(getPlatforms())
+			dispatch(getPlatforms());
 		},
 		[ dispatch ]
 	);
@@ -50,7 +82,11 @@ export default function Form() {
 			<Link to="/home">volver⮨</Link>
 			<div>
 				<h1>CREATE A NEW VIDEOGAME</h1>
-				<form onSubmit={() => handleSubmit()}>
+				<form
+					onSubmit={(e) => {
+						handleSubmit(e);
+					}}
+				>
 					{
 						state.name === '' ? <p>Debes completar todos los campos :D</p> :
 						null}
@@ -101,25 +137,39 @@ export default function Form() {
 					<div>
 						<label>🔖Genres: </label>
 						<div>
-							<select value={1} onChange={(e) => ({})}>
-								{/* handleGenreChange */}
-								<option value={1}>--Select genres--</option>
-								{allGenres.map((genre, i) => {
-									return (
-										<option key={i} value={i + 1}>
-											{genre}
-										</option>
-									);
-								})}
+							<select name="genres" onChange={(e) => handleGenreChange(e)}>
+								<option>--Select genres--</option>
+								{allGenres &&
+									allGenres.map((genre, i) => {
+										return <option key={i}>{genre}</option>;
+									})}
 							</select>
 						</div>
+						<div>
+							{state.genres.map((e, i) => (
+								<span key={i}>
+									<span>{e} </span>
+									<button onClick={() => handleDelete(e)}>x</button>
+								</span>
+							))}
+						</div>
 					</div>
+
 					<br />
 					<div>
 						<label> 🎮Platforms:</label>
-						<select>
+						<select onChange={(e) => handlePlatformsChange(e)}>
 							<option>--Select platforms--</option>
-						</select>
+							{allPlatforms &&
+								allPlatforms.map((platform, i) => {
+									return (
+										<option key={i} value={platform}>
+											{platform}
+										</option>
+									);
+								})}
+						</select>{' '}
+						*
 					</div>
 					<br />
 					<div>
@@ -139,3 +189,51 @@ export default function Form() {
 		</div>
 	);
 }
+
+// function validate(input, value) {
+
+//     switch (input) {
+//         case 'name':
+//             if(value === '') {
+//                 return setError({...error, name: ''})
+//             }
+//             if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
+//                 return setError({...error, name: 'Not special characters'})
+//             } else {
+//                 return setError({...error, name: ''})
+//             };
+//         case 'description':
+//             if(value === '') {
+//                 return setError({...error, description: ''})
+//             }
+//             if(value.replace(/\s/g, '').length < 10) {
+//                 return setError({...error, description: 'At least ten characters required'})
+//             }
+//             else {
+//                 return setError({...error, description: ''})
+//             }
+//         case 'image':
+//             if(value === ''){
+//                 return setError({...error, image: ''})
+//             }
+//             else if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
+//                 return setError({...error, image: 'Invalid URL'})
+//             } else {
+//                 return setError({...error, image: ''})
+//             };
+//         case 'rating':
+//             if(value === ''){
+//                 return setError({...error, rating: ''})
+//             }
+//             if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
+//                 return setError({...error, rating: 'Should only be numeric characters'})
+//             }else if(parseFloat(value) < 1 || parseFloat(value) > 5){
+//                 return setError({...error, rating: 'Should be between 1-5'})
+//             }
+//             else {
+//                 return setError({...error, rating: ''})
+//             }
+//         default :
+//             return error;
+//     }
+// }

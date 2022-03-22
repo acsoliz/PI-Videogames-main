@@ -100,7 +100,7 @@ export const clearDetail = (payload) => {
 
 export const createGame = (payload) => {
 	return async function(dispatch) {
-		const json = await axios.get(`${URL_GET}`, payload);
+		const json = await axios.post(`${URL_GET}`, payload);
 		return dispatch({
 			type    : ADD_GAME,
 			payload : json

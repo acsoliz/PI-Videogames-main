@@ -56,7 +56,8 @@ conn.sync({ force: true }).then(async () => {
 				background_image : videogame.background_image,
 				rating           : videogame.rating,
 				platforms        : videogame.platforms,
-				released         : videogame.released
+				released         : videogame.released,
+				db: false
 			});
 			const genre = await Genre.findAll({
 				where : {
