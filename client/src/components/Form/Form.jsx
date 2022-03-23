@@ -9,6 +9,7 @@ export default function Form() {
 
 	let allGenres = useSelector((state) => state.genres);
 	let allPlatforms = useSelector((state) => state.platforms);
+
 	allGenres = allGenres.map((e) => (e = e.name));
 	const [ error, setError ] = useState({ state: 'complete Form' });
 	const [ state, setstate ] = useState({
@@ -26,10 +27,6 @@ export default function Form() {
 			...state,
 			[e.target.name]: e.target.value
 		});
-
-		console.log(state, 'RELEASE, NAME Y RATING !!!');
-		// console.log(state.name,'RELEASE, NAME Y RATING !!!')
-		// console.log(state.rating,'RELEASE, NAME Y RATING !!!')
 	};
 	//------------>  GENERO
 	const handleGenreChange = function(e) {
@@ -38,29 +35,39 @@ export default function Form() {
 				...state,
 				genres : [ ...state.genres, e.target.value ]
 			});
-			console.log("i'M ESTATE GENEROO!  ", state, state.genero);
 		}
 	};
 
 	const handleDelete = function(e) {
+		e.preventDefault();
 		setstate({
 			...state,
-			genres : [ ...state.filter((g) => g != e) ]
+			genres : [ ...state.genres.filter((g) => g != e.target.value) ]
 		});
 	};
 
-	//--------------->   PLATFORMS
+	// //--------------->   PLATFORMS
 	const handlePlatformsChange = function(e) {
+		if (!state.platforms.includes(e.target.value)) {
+			setstate({
+				...state,
+				platforms : [ ...state.platforms, e.target.value ]
+			});
+		}
+	};
+	const handlePlatformDelete = function(e) {
+		e.preventDefault();
 		setstate({
 			...state,
-			platforms : [ ...state.platforms, e.target.value ]
+			platforms : [ ...state.platforms.filter((g) => g != e.target.value) ]
 		});
-		console.log("i'M ESTATE PLATFORMSSS!!!", state.platforms);
 	};
+
 	// ----------------> POSTEO
 	const handleSubmit = function(e) {
 		if (!state.name || !state.rating || !state.description || !state.release || !state.genres || !state.platforms) {
-			return alert('Debes completar todos los campos');
+			e.preventDefault();
+			alert('Debes completar todos los campos');
 		} else {
 			console.log("i'M ESTATEee complete!  ", state);
 			e.preventDefault();
@@ -87,9 +94,6 @@ export default function Form() {
 						handleSubmit(e);
 					}}
 				>
-					{
-						state.name === '' ? <p>Debes completar todos los campos :D</p> :
-						null}
 					<div>
 						<label>🅰Name:</label>
 						<input
@@ -146,10 +150,12 @@ export default function Form() {
 							</select>
 						</div>
 						<div>
-							{state.genres.map((e, i) => (
+							{state.genres.map((element, i) => (
 								<span key={i}>
-									<span>{e} </span>
-									<button onClick={() => handleDelete(e)}>x</button>
+									<span>{element} </span>
+									<button value={element} onClick={(e) => handleDelete(e)}>
+										x
+									</button>
 								</span>
 							))}
 						</div>
@@ -158,19 +164,27 @@ export default function Form() {
 					<br />
 					<div>
 						<label> 🎮Platforms:</label>
-						<select onChange={(e) => handlePlatformsChange(e)}>
-							<option>--Select platforms--</option>
-							{allPlatforms &&
-								allPlatforms.map((platform, i) => {
-									return (
-										<option key={i} value={platform}>
-											{platform}
-										</option>
-									);
-								})}
-						</select>{' '}
-						*
+						<div>
+							<select name="platforms " onChange={(e) => handlePlatformsChange(e)}>
+								<option>--Select platforms--</option>
+								{allPlatforms &&
+									allPlatforms.map((platform, i) => {
+										return <option key={i}>{platform}</option>;
+									})}
+							</select>
+						</div>
+						<div>
+							{state.platforms.map((element, i) => (
+								<span key={i}>
+									<span>{element} </span>
+									<button value={element} onClick={(e) => handlePlatformDelete(e)}>
+										x
+									</button>
+								</span>
+							))}
+						</div>
 					</div>
+
 					<br />
 					<div>
 						<label>📸image:</label>
