@@ -17,7 +17,6 @@ const Home = () => {
 		dispatch(filterByGenres(e.target.value));
 	}
 	function handleDbFilter(e) {
-		// console.log(e.target.value);
 		e.preventDefault();
 		if (e.target.value === '') return dispatch(getAllGames());
 		dispatch(filterDb(e.target.value));
@@ -29,7 +28,6 @@ const Home = () => {
 	const lastGame = currentPage * gamesByPage;
 	const firstGame = lastGame - gamesByPage;
 	const currentGame = videogames && videogames.slice(firstGame, lastGame);
-	// console.log(currentCountries); // array con nueve paises
 
 	const paginated = (pageNum) => {
 		setCurrentPage(pageNum);
@@ -68,16 +66,9 @@ const Home = () => {
 					/>
 				</div>
 				<div className={s.containerAllGames}>
-					<div >
+					<div>
 						<AllGames currentGame={currentGame} className={s.cards} />
 					</div>
-					{/* {
-						videogames.length > 0 ? videogames.map((e) => (
-							<div key={e.id}>
-								<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
-							</div>
-						)) :
-						<div>Loading...</div>} */}
 				</div>
 			</div>
 		</div>

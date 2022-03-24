@@ -14,9 +14,9 @@ async function getAllGames(req, res, next) {
 				include : {
 					model      : Genre,
 					attributes : [ 'name' ],
-					through    : {
-						attributes : []
-					}
+					// through    : {
+					// 	attributes : []
+					// }
 				}
 			});
 			AllGames = AllGames.map((e) => {
@@ -29,8 +29,7 @@ async function getAllGames(req, res, next) {
 					rating           : e.rating
 				};
 			});
-			// console.log('Soy All Games DETALEEEEEEESSS', AllGames);
-
+			
 			return res.send(AllGames);
 		}
 
@@ -46,6 +45,9 @@ async function getAllGames(req, res, next) {
 		} else {
 			console.log("We can't find the VideoGame, please check the name ");
 		}
+		// console.log("We can't find the VideoGame, please check the name ");
+			if(byName.length<1){ return res.send("We can't find the VideoGame, please check the name ")}
+
 		return res.send(byName);
 	} catch (error) {
 		console.log(error);
@@ -91,10 +93,10 @@ async function getById(req, res, next) {
 // __________ Create VideoGame___________
 async function createGame(req, res, next) {
 	let { name, image, description, released, rating, genres, platforms } = req.body;
+	platforms = platforms.join(', ');
 
-	const maxId = await Videogame.max('id');
+	const maxId = await Videogame.max('id'); //Select MAX
 	const id = maxId + 10 * Math.random();
-	// console.log("Soy ID MAXXXXX!!", id)
 
 	const errors = [];
 	//verifico Genres
@@ -109,23 +111,24 @@ async function createGame(req, res, next) {
 	} else {
 		errors.push('Genres is not an Array');
 	}
-	//----verifico NAME
-	if (name == null) errors.push('the name field cannot be empty');
-	//----verifico NAME
-	if (typeof rating != 'number') {
-		errors.push("rating should be an integer number between 1 and 5");
+	if(typeof platforms != 'string') {
+		errors.push("platforms should be an string. EJ: 'Xbox, PSI' ");
 	}
-	if(released.length < 3 ){
+	if (name == null) errors.push('the name field cannot be empty');
+	if ( !rating) {
+		errors.push('rating should be an integer number between 1 and 5');
+	}
+	if (typeof released != 'string') {
 		errors.push("released should be an string. EJ: '03-15-2018' ");
 	}
-	if(description.length<6){
-		errors.push("must be a string and must contain more than 10 characters ");		
+	if (description.length < 6) {
+		errors.push('must be a string and must contain more than 10 characters ');
+	}console.log("pase el NEXT")
+	if (errors.length > 0) {
+		console.log('Soy los errrores', errors);
+		return res.status(400).send(errors);		
 	}
 	
-
-
-
-	if (!name || !description || !released || !genres) return res.status(400).send('TE FALTA ALGOOOOO!!');
 
 	try {
 		const game = await Videogame.create({
@@ -138,15 +141,14 @@ async function createGame(req, res, next) {
 			platforms,
 			db               : true
 		});
-		// console.log("Soy el GAME creado!! ",game)
 		const genre = await Genre.findAll({
 			where : {
 				name : genres
 			}
 		});
 		game.addGenre(genre);
-		res.send('Videogame creado con exito');
-		// console.log("Soy el GAME creado!! ",genre)
+		return res.send('Videogame creado con exito');
+		
 	} catch (error) {
 		console.log('No se pudo crear', error);
 	}

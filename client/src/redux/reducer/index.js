@@ -58,6 +58,7 @@ export default function rootReducer(state = initialState, action) {
 			};
 
 		case FILTER_BY_GENRES:
+			// allDbGames es un COPIA  de mi estado y se carga con todos los juegos en GET_Videogames
 			const gamesFiltered =
 
 					action.payload === 'All' ? allDbGames :
@@ -65,7 +66,7 @@ export default function rootReducer(state = initialState, action) {
 
 			return {
 				...state,
-				videogames : gamesFiltered
+				videogames : gamesFiltered // gamesFiltered tiene todos los jueos ya filtrados
 			};
 		case FILTER_BY_Db:
 			const gamesDbFilter =

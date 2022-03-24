@@ -1,17 +1,17 @@
 import axios from 'axios';
-const URL_GET = 'http://localhost:3001/videogames/';
 const URL_NAME_GET = 'http://localhost:3001/videogames/?name=';
-export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
-export const API_GENRES = 'http://localhost:3001/genres';
 export const API_PLATFORMS= 'http://localhost:3001/platforms';
-export const GET_BY_NAME = 'GET_BY_NAME';
+export const API_GENRES = 'http://localhost:3001/genres';
+const URL_GET = 'http://localhost:3001/videogames/';
 export const FILTER_BY_GENRES = 'FILTER_BY_GENRES';
-export const FILTER_BY_Db = 'FILTER_BY_Db';
-export const GET_DETAIL = 'GET_DETAIL';
-export const ADD_GAME = 'ADD_GAME';
-export const CLEAR_DETAIL = 'CLEAR_DETAIL';
-export const GET_GENRE = 'GET_GENRE';
+export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_PLATFORMS = 'GET_PLATFORMS';
+export const FILTER_BY_Db = 'FILTER_BY_Db';
+export const CLEAR_DETAIL = 'CLEAR_DETAIL';
+export const GET_BY_NAME = 'GET_BY_NAME';
+export const GET_DETAIL = 'GET_DETAIL';
+export const GET_GENRE = 'GET_GENRE';
+export const ADD_GAME = 'ADD_GAME';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
@@ -60,6 +60,9 @@ export function getByName(name) {
 	return async function(dispatch) {
 		try {
 			var json = await axios.get(URL_NAME_GET + name);
+			if (!Array.isArray(json)){
+				
+			}
 			return dispatch({
 				type    : GET_BY_NAME,
 				payload : json.data
@@ -107,3 +110,15 @@ export const createGame = (payload) => {
 		});
 	};
 };
+
+
+// export const orderBy = (payload) => {
+// 	return async function(dispatch) {
+// 		const json = await axios.post(`${URL_GET}`, payload);
+// 		return dispatch({
+// 			type    : ADD_GAME,
+// 			payload : json
+// 		});
+// 	};
+// };
+

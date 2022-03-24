@@ -16,11 +16,12 @@ export default function Form() {
 		name        : '',
 		rating      : 0,
 		description : '',
-		release     : '',
+		released     : '',
+		image       : '',
 		genres      : [],
 		platforms   : []
 	});
-	//----------------------->  name, rating, description, release IMAGE
+	//----------------------->  name, rating, description, released IMAGE
 	const handleInputChange = function(e) {
 		e.preventDefault();
 		setstate({
@@ -48,6 +49,7 @@ export default function Form() {
 
 	// //--------------->   PLATFORMS
 	const handlePlatformsChange = function(e) {
+		console.log("Aqui contener el nombre del platform",e.target.value)
 		if (!state.platforms.includes(e.target.value)) {
 			setstate({
 				...state,
@@ -64,16 +66,10 @@ export default function Form() {
 	};
 
 	// ----------------> POSTEO
-	const handleSubmit = function(e) {
-		if (!state.name || !state.rating || !state.description || !state.release || !state.genres || !state.platforms) {
-			e.preventDefault();
-			alert('Debes completar todos los campos');
-		} else {
-			console.log("i'M ESTATEee complete!  ", state);
-			e.preventDefault();
-			dispatch(createGame(state));
-			alert('VIdeoJuego Creado');
-		}
+	const handleSubmit = function(e) {		
+		e.preventDefault();		
+		dispatch(createGame(state));
+		alert('VIdeoJuego Creado! ');
 	};
 
 	useEffect(
@@ -83,6 +79,54 @@ export default function Form() {
 		},
 		[ dispatch ]
 	);
+
+	// function validate(input, value) {
+
+	//     switch (input) {
+	//         case 'name':
+	//             if(value === '') {
+	//                 return setError({...error, name: ''})
+	//             }
+	//             if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
+	//                 return setError({...error, name: 'Not special characters'})
+	//             } else {
+	//                 return setError({...error, name: ''})
+	//             };
+	//         case 'description':
+	//             if(value === '') {
+	//                 return setError({...error, description: ''})
+	//             }
+	//             if(value.replace(/\s/g, '').length < 10) {
+	//                 return setError({...error, description: 'At least ten characters required'})
+	//             }
+	//             else {
+	//                 return setError({...error, description: ''})
+	//             }
+	//         case 'image':
+	//             if(value === ''){
+	//                 return setError({...error, image: ''})
+	//             }
+	//             else if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
+	//                 return setError({...error, image: 'Invalid URL'})
+	//             } else {
+	//                 return setError({...error, image: ''})
+	//             };
+	//         case 'rating':
+	//             if(value === ''){
+	//                 return setError({...error, rating: ''})
+	//             }
+	//             if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
+	//                 return setError({...error, rating: 'Should only be numeric characters'})
+	//             }else if(parseFloat(value) < 1 || parseFloat(value) > 5){
+	//                 return setError({...error, rating: 'Should be between 1-5'})
+	//             }
+	//             else {
+	//                 return setError({...error, rating: ''})
+	//             }
+	//         default :
+	//             return error;
+	//     }
+	// }
 
 	return (
 		<div>
@@ -135,7 +179,7 @@ export default function Form() {
 					<br />
 					<div>
 						<label>📆Release:</label>
-						<input name="release" type="date" value={state.release} onChange={handleInputChange} />
+						<input name="released" type="date" value={state.released} onChange={handleInputChange} />
 					</div>
 					<br />
 					<div>
@@ -203,51 +247,3 @@ export default function Form() {
 		</div>
 	);
 }
-
-// function validate(input, value) {
-
-//     switch (input) {
-//         case 'name':
-//             if(value === '') {
-//                 return setError({...error, name: ''})
-//             }
-//             if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
-//                 return setError({...error, name: 'Not special characters'})
-//             } else {
-//                 return setError({...error, name: ''})
-//             };
-//         case 'description':
-//             if(value === '') {
-//                 return setError({...error, description: ''})
-//             }
-//             if(value.replace(/\s/g, '').length < 10) {
-//                 return setError({...error, description: 'At least ten characters required'})
-//             }
-//             else {
-//                 return setError({...error, description: ''})
-//             }
-//         case 'image':
-//             if(value === ''){
-//                 return setError({...error, image: ''})
-//             }
-//             else if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
-//                 return setError({...error, image: 'Invalid URL'})
-//             } else {
-//                 return setError({...error, image: ''})
-//             };
-//         case 'rating':
-//             if(value === ''){
-//                 return setError({...error, rating: ''})
-//             }
-//             if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
-//                 return setError({...error, rating: 'Should only be numeric characters'})
-//             }else if(parseFloat(value) < 1 || parseFloat(value) > 5){
-//                 return setError({...error, rating: 'Should be between 1-5'})
-//             }
-//             else {
-//                 return setError({...error, rating: ''})
-//             }
-//         default :
-//             return error;
-//     }
-// }
