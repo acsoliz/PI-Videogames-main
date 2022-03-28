@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllGames, createGame, getGenres, getPlatforms } from '../../redux/actions/index';
+import { createGame, getGenres, getPlatforms } from '../../redux/actions/index';
 
 export default function Form() {
 	const dispatch = useDispatch();
-	const history = useNavigate();
+	// const history = useNavigate();
+	let stateGenres = useSelector((state) => state.genres);
+	let allGenres = stateGenres.map((e) => (e = e.name));
 
-	let allGenres = useSelector((state) => state.genres);
 	let allPlatforms = useSelector((state) => state.platforms);
 
-	allGenres = allGenres.map((e) => (e = e.name));
-	const [ error, setError ] = useState({ state: 'complete Form' });
 	const [ state, setstate ] = useState({
 		name        : '',
 		rating      : 0,
 		description : '',
-		released     : '',
+		released    : '',
 		image       : '',
 		genres      : [],
 		platforms   : []
+	});
+	const [ error, setError ] = useState({
+		name        : '',
+		rating      : '',
+		description : '',
+		released    : '',
+		image       : '',
+		genres      : '',
+		platforms   : ''
 	});
 	//----------------------->  name, rating, description, released IMAGE
 	const handleInputChange = function(e) {
@@ -28,6 +36,7 @@ export default function Form() {
 			...state,
 			[e.target.name]: e.target.value
 		});
+		validate(e.target.name, e.target.value);
 	};
 	//------------>  GENERO
 	const handleGenreChange = function(e) {
@@ -36,9 +45,13 @@ export default function Form() {
 				...state,
 				genres : [ ...state.genres, e.target.value ]
 			});
+
+			setError({
+				...error,
+				[e.target.name]: ''
+			});
 		}
 	};
-
 	const handleDelete = function(e) {
 		e.preventDefault();
 		setstate({
@@ -46,18 +59,22 @@ export default function Form() {
 			genres : [ ...state.genres.filter((g) => g != e.target.value) ]
 		});
 	};
-
 	// //--------------->   PLATFORMS
 	const handlePlatformsChange = function(e) {
-		console.log("Aqui contener el nombre del platform",e.target.value)
 		if (!state.platforms.includes(e.target.value)) {
 			setstate({
 				...state,
 				platforms : [ ...state.platforms, e.target.value ]
 			});
+			setError({
+				...error,
+				[e.target.name]: ''
+			});
+			console.log(error)
 		}
 	};
 	const handlePlatformDelete = function(e) {
+		//una de las platforms{}
 		e.preventDefault();
 		setstate({
 			...state,
@@ -65,11 +82,45 @@ export default function Form() {
 		});
 	};
 
+	///////////////////////////////////////////////
+	function validateSubmit() {
+		var asignErrors = {};
+
+		if (!state.platforms.length) {
+			asignErrors = { ...asignErrors, platforms: 'Must select at least one platform' };
+		}
+		if (!state.genres.length) {
+			asignErrors = { ...asignErrors, genres: 'Must select at least one genre' };
+		}
+		if (!state.name) {
+			asignErrors = { ...asignErrors, name: 'Must add a name' };
+		}
+		if (!state.description) {
+			asignErrors = { ...asignErrors, description: 'Must add a description' };
+		}
+
+		setError({ ...error, ...asignErrors });
+
+		return Object.values({ ...error, ...asignErrors }).filter((value) => value != '');
+	}
+
 	// ----------------> POSTEO
-	const handleSubmit = function(e) {		
-		e.preventDefault();		
-		dispatch(createGame(state));
-		alert('VIdeoJuego Creado! ');
+	const handleSubmit = function(e) {
+		e.preventDefault();
+		const flag = validateSubmit();
+		if (!flag.length) {
+			try {
+				dispatch(createGame(state));
+				alert('VideoGame Created! ');
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			console.log('atenti soy el Flag para validar: ', flag);
+			alert('Missing or invalid values');
+		}
+
+		// dispatch(getAllGames())
 	};
 
 	useEffect(
@@ -80,57 +131,57 @@ export default function Form() {
 		[ dispatch ]
 	);
 
-	// function validate(input, value) {
-
-	//     switch (input) {
-	//         case 'name':
-	//             if(value === '') {
-	//                 return setError({...error, name: ''})
-	//             }
-	//             if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
-	//                 return setError({...error, name: 'Not special characters'})
-	//             } else {
-	//                 return setError({...error, name: ''})
-	//             };
-	//         case 'description':
-	//             if(value === '') {
-	//                 return setError({...error, description: ''})
-	//             }
-	//             if(value.replace(/\s/g, '').length < 10) {
-	//                 return setError({...error, description: 'At least ten characters required'})
-	//             }
-	//             else {
-	//                 return setError({...error, description: ''})
-	//             }
-	//         case 'image':
-	//             if(value === ''){
-	//                 return setError({...error, image: ''})
-	//             }
-	//             else if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
-	//                 return setError({...error, image: 'Invalid URL'})
-	//             } else {
-	//                 return setError({...error, image: ''})
-	//             };
-	//         case 'rating':
-	//             if(value === ''){
-	//                 return setError({...error, rating: ''})
-	//             }
-	//             if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
-	//                 return setError({...error, rating: 'Should only be numeric characters'})
-	//             }else if(parseFloat(value) < 1 || parseFloat(value) > 5){
-	//                 return setError({...error, rating: 'Should be between 1-5'})
-	//             }
-	//             else {
-	//                 return setError({...error, rating: ''})
-	//             }
-	//         default :
-	//             return error;
-	//     }
-	// }
+	function validate(state, value) {
+		switch (state) {
+			case 'name':
+				if (value === '') {
+					return setError({ ...error, name: '' });
+				}
+				if (!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)) {
+					return setError({ ...error, name: 'Not special characters' });
+				} else {
+					return setError({ ...error, name: '' });
+				}
+			case 'description':
+				if (value === '') {
+					return setError({ ...error, description: '' });
+				}
+				if (value.replace(/\s/g, '').length < 10) {
+					return setError({ ...error, description: 'At least ten characters required' });
+				} else {
+					return setError({ ...error, description: '' });
+				}
+			case 'image':
+				if (value === '') {
+					return setError({ ...error, image: '' });
+				} else if (
+					!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi.test(
+						value
+					)
+				) {
+					return setError({ ...error, image: 'Invalid URL' });
+				} else {
+					return setError({ ...error, image: '' });
+				}
+			case 'rating':
+				if (value === '') {
+					return setError({ ...error, rating: '' });
+				}
+			// 	if (!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)) {
+			// 		return setError({ ...error, rating: 'Should only be numeric characters' });
+			// 	} else if (parseFloat(value) < 1 || parseFloat(value) > 5) {
+			// 		return setError({ ...error, rating: 'Should be between 1-5' });
+			// 	} else {
+			// 		return setError({ ...error, rating: '' });
+			// 	}
+			default:
+				return error;
+		}
+	}
 
 	return (
 		<div>
-			<Link to="/home">volver⮨</Link>
+			<Link to="/home">HOME</Link>
 			<div>
 				<h1>CREATE A NEW VIDEOGAME</h1>
 				<form
@@ -147,6 +198,7 @@ export default function Form() {
 							onChange={handleInputChange}
 							placeholder="Ingrese un nombre"
 						/>
+						<span>{error.name}</span>
 					</div>
 					<br />
 
@@ -162,6 +214,7 @@ export default function Form() {
 							<option>4</option>
 							<option>5</option>
 						</select>
+						{/* <span>{error.rating}</span> */}
 					</div>
 					<br />
 					<div>
@@ -175,11 +228,13 @@ export default function Form() {
 							value={state.description}
 							onChange={handleInputChange}
 						/>
+						<span>{error.description}</span>
 					</div>
 					<br />
 					<div>
 						<label>📆Release:</label>
 						<input name="released" type="date" value={state.released} onChange={handleInputChange} />
+						<span>{error.released}</span>
 					</div>
 					<br />
 					<div>
@@ -239,6 +294,7 @@ export default function Form() {
 							onChange={handleInputChange}
 							placeholder="Ingrese la URL de la imagen"
 						/>
+						<span>{error.image}</span>
 					</div>
 					<br />
 					<button type="submit">Create Game</button>

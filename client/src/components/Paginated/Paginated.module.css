@@ -6,8 +6,9 @@
 }
 .button {
 	/* cursor: pointer; */
-	font-size: xx-large;
+	font-size:1cm;
     padding: 1rem;
+	color:darkorchid
 }
 .button:hover {
 	color: #0000db;

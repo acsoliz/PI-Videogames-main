@@ -1,0 +1,141 @@
+/* 
+ .divContainer {
+    background-image: url("../../img/4ba9b4b68ffcc7019b112174883ba4d6.jpg") ;
+    background-size: cover;
+    position : absolute;
+	width : 100%;
+	height : 100%;
+ } */
+ .homeBtn {
+    margin: 20px;
+    font-size: 18px;
+    width: 170px;
+    padding: 15px 30px;
+  
+    background-color: #8f8e8ede;
+    border: none;
+    cursor: pointer;
+    color: #ffff;
+    font-family: "DM Serif Display", serif;
+    transition: all 0.5s ease;
+  }
+  
+  .homeBtn:hover {
+    background-color: rgba(75, 74, 74, 0.781);
+  }
+  
+  .landingContainer {
+    gap: 1rem;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .landingContainer > h1 {
+    font-size: 100px;
+    color: #ffff;
+    font-family: "DM Serif Display", serif;
+  }
+  
+  .landingContainer > h3 {
+    font-size: 32px;
+    color: #ffff;
+    font-family: "DM Serif Display", serif;
+  }
+  
+
+ .slider div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .slider {
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.349);
+    height: fit-content;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .slider figure {
+    position: relative;
+    height: 100vh;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation: slider 25s infinite;
+  }
+  
+  .slider figure img {
+    position: relative;
+    z-index: -1;
+    height: 100vh;
+    width: 100vw;
+  
+    float: left;
+  }
+  @keyframes slider {
+    0% {
+      left: 0;
+    }
+    20% {
+      left: 0;
+    }
+    25% {
+      left: -100%;
+    }
+    45% {
+      left: -100;
+    }
+    50% {
+      left: -200%;
+    }
+    70% {
+      left: -200;
+    }
+    75% {
+      left: -300%;
+    }
+    95% {
+      left: -300%;
+    }
+    100% {
+      left: -400%;
+    }
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .landingContainer {
+      justify-content: flex-start;
+      padding: 20px;
+      gap: 1rem;
+    }
+    .landingContainer > h1 {
+      font-size: 50px;
+    }
+    .landingContainer > h3 {
+      font-size: 20px;
+    }
+    .homeBtn {
+      font-size: 10px;
+      width: 120px;
+      padding: 7px 15px;
+    }
+  }
+  
+  @media screen and (min-width: 2000px) {
+    .landingContainer > h1 {
+      font-size: 150px;
+    }
+    .landingContainer > h3 {
+      font-size: 70px;
+    }
+    .homeBtn {
+      font-size: 34px;
+      width: 200px;
+      padding: 15px 30px;
+    }
+  }  

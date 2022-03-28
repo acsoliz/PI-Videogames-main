@@ -12,6 +12,8 @@ export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_GENRE = 'GET_GENRE';
 export const ADD_GAME = 'ADD_GAME';
+export const BY_ALPH = 'BY_ALPH';
+export const BY_RATING = 'BY_RATING';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
@@ -60,8 +62,9 @@ export function getByName(name) {
 	return async function(dispatch) {
 		try {
 			var json = await axios.get(URL_NAME_GET + name);
-			if (!Array.isArray(json)){
-				
+			
+			if (!Array.isArray(json.data)){
+				json.data="We can't find the VideoGame, please check the name"
 			}
 			return dispatch({
 				type    : GET_BY_NAME,
@@ -112,13 +115,17 @@ export const createGame = (payload) => {
 };
 
 
-// export const orderBy = (payload) => {
-// 	return async function(dispatch) {
-// 		const json = await axios.post(`${URL_GET}`, payload);
-// 		return dispatch({
-// 			type    : ADD_GAME,
-// 			payload : json
-// 		});
-// 	};
-// };
+export function sortByAlph(payload){
+	return {
+		type: BY_ALPH,
+		payload
+	}
+}
 
+
+export function sortByRating(payload){
+	return {
+		type: BY_RATING,
+		payload
+	}
+}

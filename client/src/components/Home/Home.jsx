@@ -1,4 +1,4 @@
-import { getAllGames, filterByGenres, filterDb } from '../../redux/actions/index';
+import { getAllGames, filterByGenres, filterDb, sortByAlph, sortByRating } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import VideoGame from '../VideoGame/VideoGame';
 import SearchBar from '../SearchBar/SearchBar';
@@ -10,6 +10,8 @@ import s from './Home.module.css';
 const Home = () => {
 	const dispatch = useDispatch();
 	const videogames = useSelector((state) => state.videogames);
+	const genres = useSelector((state) => state.genres);
+
 	//--------------mostrar los paises
 	function handleOnChange(e) {
 		e.preventDefault();
@@ -24,41 +26,101 @@ const Home = () => {
 
 	// //--------------paginado
 	const [ currentPage, setCurrentPage ] = useState(1); //Pagina actual
-	const [ gamesByPage, setGamesByPage ] = useState(15); // Cuantos paises por page
+	const [ gamesByPage, setGamesByPage ] = useState(3); // Cuantos paises por page
 	const lastGame = currentPage * gamesByPage;
 	const firstGame = lastGame - gamesByPage;
-	const currentGame = videogames && videogames.slice(firstGame, lastGame);
+	const currentGame = videogames && videogames.slice(firstGame, lastGame); //
+
+	if (currentGame.length == 0) {
+		
+		
+	}
 
 	const paginated = (pageNum) => {
 		setCurrentPage(pageNum);
 	};
 	//---------------------------------------
+	//----------------Ordenarlos-------------
+	const [ sort, setSort ] = useState('');
+
+	function handleSortAlph(e) {
+		e.preventDefault();
+		dispatch(sortByAlph(e.target.value));
+		setSort(e.target.value);
+	}
+
+	function habdleSortRating(e) {
+		e.preventDefault();
+		dispatch(sortByRating(e.target.value));
+		setSort(e.target.value);
+	}
+	//--------------- REFRESCAR----------------------
+	function handleClick(e) {
+		e.preventDefault();
+		dispatch(getAllGames());
+	}
+	//---------------------------------------
 
 	return (
 		<div>
-			<div className={s.container}>
-				<SearchBar />
+			<button className={s.volver} onClick={(e) => handleClick(e)}>
+				volver⮨
+			</button>
 
-				<Link to={'/create'}>Create Videogame</Link>
-				<div>
-					<select onChange={(e) => handleOnChange(e)}>
-						<option value={'All'}>Todos</option>
-						<option value={'Action'}>Action</option>
-						<option value={'Adventure'}>Adventure</option>
-						<option value={'RPG'}>RPG</option>
-						<option value={'Shooter'}>Shooter</option>
-						<option value={'Puzzle'}>Puzzle</option>
-						<option value={'Indie'}>Indie</option>
-					</select>
+			<div className={s.container}>
+				<div className={s.search}>
+					<SearchBar />
 				</div>
-				<div>
-					<select onChange={(e) => handleDbFilter(e)}>
-						<option value={'All'}>Todos</option>
-						<option value={true}>Created</option>
-						<option value={false}>Not Created</option>
-					</select>
+
+				<Link to={'/create'} className={s.toCreate}>
+					Create Videogame
+				</Link>
+				<div className={s.controlls}>
+					<div>
+						<select onChange={(e) => handleOnChange(e)}>
+							{genres && genres.map((el, i) => <option key={i}>{el.name}</option>)}
+						</select>
+					</div>
+					<div>
+						<select className={s.selectFilter} onChange={(e) => handleDbFilter(e)}>
+							{/* <option defaultValue="true" disabled="disabled">Creation</option> */}
+							<option value={'All'}>Todos</option>
+							<option value={true}>Created</option>
+							<option value={false}>Not Created</option>
+						</select>
+					</div>
+
+					<div>
+						<div>
+							<select
+								className={s.selectFilter}
+								onChange={(e) => {
+									handleSortAlph(e);
+								}}
+							>
+								<option disabled="disabled">a-z or za</option>
+								<option value="a-z">A-Z</option>
+								<option value="z-a">Z-A</option>
+							</select>
+						</div>
+					</div>
+					<div>
+						<div>
+							<select
+								className={s.selectFilter}
+								onChange={(e) => {
+									habdleSortRating(e);
+								}}
+							>
+								<option disabled="disabled">Rating</option>
+								<option value="most">Most</option>
+								<option value="less">Less</option>
+							</select>
+						</div>
+					</div>
 				</div>
-				<div>
+
+				<div className={s.paginated}>
 					<Paginated
 						videogames={videogames && videogames.length}
 						gamesByPage={gamesByPage}
@@ -66,10 +128,13 @@ const Home = () => {
 					/>
 				</div>
 				<div className={s.containerAllGames}>
-					<div>
-						<AllGames currentGame={currentGame} className={s.cards} />
-					</div>
+					<AllGames currentGame={currentGame} className={s.cards} />
 				</div>
+				<Paginated
+					videogames={videogames && videogames.length}
+					gamesByPage={gamesByPage}
+					paginated={paginated}
+				/>
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { getAllGames } from './redux/actions';
+import { getAllGames, getGenres } from './redux/actions';
 import { useDispatch } from 'react-redux';
 import './App.css';
 import Home from './components/Home/Home';
@@ -8,12 +8,11 @@ import Landing from './components/Landing/Landing';
 import Detail from './components/Details/Detail';
 import Form from './components/Form/Form';
 function App() {
-
-	// ESTO VA DENTRO DE function APP(), antes del return 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getAllGames());
+		dispatch(getGenres())
 	}, []);
 
 	return (

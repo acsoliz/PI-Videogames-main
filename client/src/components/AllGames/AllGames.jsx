@@ -1,14 +1,21 @@
 import React from 'react';
 import VideoGame from '../VideoGame/VideoGame';
 import a from './AllGames.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllGames, filterByGenres, filterDb, sortByAlph, sortByRating } from '../../redux/actions/index';
 
 //escucho y mapeo el estadode countries y por cada uno renderizo una Card
 
 export default function AllGames({ currentGame }) {
-	if(typeof currentGame == 'string'){
-		var message = ("We can't find the VideoGame, please check the name and try again")
-	}else{
-		var message = ("... Loadding") 
+	if (typeof currentGame == 'string') {
+		var message = "We can't find the VideoGame, please check the name and try again";
+	} else {
+		var message = '... Loadding';
+	}
+	const dispatch = useDispatch();
+	function handleClick(e) {
+		e.preventDefault();
+		dispatch(getAllGames());
 	}
 	return (
 		<div className={a.cards}>
@@ -18,8 +25,11 @@ export default function AllGames({ currentGame }) {
 						<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
 					</div>
 				)) :
-				<p>{message}</p>}
+				<div>
+					<p>{message}</p>
+
+					<button onClick={(e) => handleClick(e)}>volver⮨</button>
+				</div>}
 		</div>
 	);
 }
-

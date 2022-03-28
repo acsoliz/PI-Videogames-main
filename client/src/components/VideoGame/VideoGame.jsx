@@ -11,7 +11,7 @@ export default function VideoGame({ name, image, genres, id }) {
 			<Link to={`/videogame/${id}`}>
 				<img src={image} width="350px" height="200px" alt="" className={s.filter}/>
 			</Link>
-			<div>{genres}</div>
+			<div className={s.divGenres}>{genres}</div>
 		</div>
 	);
 }

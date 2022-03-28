@@ -1,0 +1,47 @@
+.container{
+    background-image: url("https://www.solofondos.com/wp-content/uploads/2015/11/fondo-ipad.jpg") ;
+}
+
+.controlls {
+	text-align: right;
+	float: right;
+	/* border-style: groove; */
+	border-radius: 20px;
+   padding-right: 1cm;
+   padding-top: 28px;
+}
+.paginated {
+    padding-top: 100px;
+	/* border-style: groove; */
+	border-radius: 20px;
+    
+}
+.containerAllGames {
+    /* border-style: groove; */
+	border-radius: 20px;
+   
+}
+.toCreate{
+    /* border-style:groove; */
+    border-radius: 20px;
+    text-align: right;
+    padding-right: 100px;
+	float: right;
+    padding-top: 28px;
+}
+.search{
+    /* border-style:groove;
+    border-radius: 20px; */
+    text-align: left;
+    padding-top: 80px;
+    float: left;
+
+}
+.volver{
+    /* border-style:groove; */
+    border-radius: 20px;
+    float: left;
+}
+.selectFilter{
+    width: 2cm;
+}

@@ -2,7 +2,7 @@ import s from './Paginated.module.css';
 import React from 'react';
 
 export default function Paginated ({videogames, gamesByPage, paginated}){
-    const pageNum = [];
+        const pageNum = [];
     // console.log("Hola desde el paginadooo!", paginated)
 
     for(var i=1; i<=Math.ceil(videogames / gamesByPage); i++){

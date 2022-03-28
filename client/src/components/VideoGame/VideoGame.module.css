@@ -1,6 +1,17 @@
-
-.contenedorCard{
-    border-style:groove;
-    border-radius: 20px;
-
+.contenedorCard {
+	/* border-style: groove; */
+	border-radius: 20px;
+	height: 9cm;
+	width: 10cm;
+	
+}
+.contenedorCard:hover {
+	background: transparent ;
+}
+.divGenres{
+background-color: white;
+border-radius: 20px;
+}
+.filter{
+	border-radius: 20px;
 }

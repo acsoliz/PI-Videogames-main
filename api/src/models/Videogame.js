@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
 		{
 			id               : {
 				type         : DataTypes.FLOAT,
-				defaultValue : 9999,
+				defaultValue : (9999 *Math.random()),
 				allowNull: false,
 				primaryKey   : true
 				
