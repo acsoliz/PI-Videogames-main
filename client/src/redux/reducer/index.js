@@ -9,7 +9,8 @@ import {
 	CLEAR_DETAIL,
 	GET_PLATFORMS,
 	BY_ALPH,
-	BY_RATING
+	BY_RATING,
+	DESTROY
 } from '../actions';
 const initialState = {
 	videogames    : [],//
@@ -49,7 +50,8 @@ export default function rootReducer(state = initialState, action) {
 					details : []
 				};
 		case GET_PLATFORMS:
-				return {
+	
+			return {
 				...state,
 				platforms : action.payload
 			};
@@ -57,7 +59,6 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state
 			};
-			
 		case FILTER_BY_GENRES:
 			// videogamesAux es un COPIA  de mi estado y se carga con todos los juegos en GET_Videogames
 			const getGenres = videogamesAux
@@ -133,6 +134,9 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				videogames : sortByRating
 			};
+		}
+		case DESTROY : {
+
 		}
 		default:
 			return state;

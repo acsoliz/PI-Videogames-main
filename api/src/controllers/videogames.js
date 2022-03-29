@@ -108,7 +108,6 @@ async function createGame(req, res, next) {
 			where      : { id: id },
 			attributes : [ 'id' ]
 		});
-	
 	} while (existe === id);
 
 	const errors = [];
@@ -137,7 +136,6 @@ async function createGame(req, res, next) {
 		errors.push('must be a string and must contain more than 10 characters ');
 	}
 	if (errors.length > 0) {
-	
 		return res.status(400).send(errors);
 	}
 
@@ -166,4 +164,24 @@ async function createGame(req, res, next) {
 	}
 }
 
-module.exports = { getAllGames, getById, createGame };
+//--------------------------------------DELETE -------------------------------------------------
+
+async function deleteGame(req, res, next) {
+	try {
+		
+		const id = req.params.idVideogame;
+		let videogame = await Videogame.destroy({
+			where   : { id: id },
+			include : {
+				model      : Genre,
+				attributes : [ 'name' ]
+			}
+		});		
+		
+		res.send( "Complete Destruction ");
+	} catch (error) {
+		console.log('videogame cannot be deleted', error)
+	}
+}
+
+module.exports = { getAllGames, getById, createGame, deleteGame };

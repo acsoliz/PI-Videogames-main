@@ -68,9 +68,9 @@ export default function Form() {
 			});
 			setError({
 				...error,
-				[e.target.name]: ''
+				platforms: ''
 			});
-			console.log(error)
+
 		}
 	};
 	const handlePlatformDelete = function(e) {
@@ -85,7 +85,7 @@ export default function Form() {
 	///////////////////////////////////////////////
 	function validateSubmit() {
 		var asignErrors = {};
-
+	
 		if (!state.platforms.length) {
 			asignErrors = { ...asignErrors, platforms: 'Must select at least one platform' };
 		}
@@ -100,8 +100,9 @@ export default function Form() {
 		}
 
 		setError({ ...error, ...asignErrors });
+	
+		return Object.values({ ...error, ...asignErrors }).filter((value) => value !== '');
 
-		return Object.values({ ...error, ...asignErrors }).filter((value) => value != '');
 	}
 
 	// ----------------> POSTEO
@@ -112,11 +113,12 @@ export default function Form() {
 			try {
 				dispatch(createGame(state));
 				alert('VideoGame Created! ');
+				<Link to="/home/" />
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		} else {
-			console.log('atenti soy el Flag para validar: ', flag);
+			// console.log('atenti soy el Flag para validar: ', flag);
 			alert('Missing or invalid values');
 		}
 

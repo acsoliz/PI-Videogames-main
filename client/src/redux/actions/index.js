@@ -1,6 +1,6 @@
 import axios from 'axios';
 const URL_NAME_GET = 'http://localhost:3001/videogames/?name=';
-export const API_PLATFORMS= 'http://localhost:3001/platforms';
+export const API_PLATFORMS = 'http://localhost:3001/platforms';
 export const API_GENRES = 'http://localhost:3001/genres';
 const URL_GET = 'http://localhost:3001/videogames/';
 export const FILTER_BY_GENRES = 'FILTER_BY_GENRES';
@@ -10,10 +10,11 @@ export const FILTER_BY_Db = 'FILTER_BY_Db';
 export const CLEAR_DETAIL = 'CLEAR_DETAIL';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
+export const BY_RATING = 'BY_RATING';
 export const GET_GENRE = 'GET_GENRE';
 export const ADD_GAME = 'ADD_GAME';
+export const DESTROY = 'DESTROY';
 export const BY_ALPH = 'BY_ALPH';
-export const BY_RATING = 'BY_RATING';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
@@ -31,28 +32,26 @@ export const getAllGames = () => {
 
 export const getPlatforms = () => {
 	return async (dispatch) => {
-		try{
+		try {
 			const json = await axios.get(API_PLATFORMS);
 			return dispatch({
-				type:GET_PLATFORMS,
-				payload: json.data
-			})
-		}catch(error){
-			console.log(error)
+				type    : GET_PLATFORMS,
+				payload : json.data
+			});
+		} catch (error) {
+			console.log(error);
 		}
-	}
- }
-
+	};
+};
 
 export const getGenres = () => {
 	return async (dispatch) => {
 		try {
 			const json = await axios.get(API_GENRES);
 			return dispatch({
-				type:GET_GENRE,
-				payload: json.data
-
-			})
+				type    : GET_GENRE,
+				payload : json.data
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -62,9 +61,9 @@ export function getByName(name) {
 	return async function(dispatch) {
 		try {
 			var json = await axios.get(URL_NAME_GET + name);
-			
-			if (!Array.isArray(json.data)){
-				json.data="We can't find the VideoGame, please check the name"
+
+			if (!Array.isArray(json.data)) {
+				json.data = "We can't find the VideoGame, please check the name";
 			}
 			return dispatch({
 				type    : GET_BY_NAME,
@@ -74,13 +73,6 @@ export function getByName(name) {
 			console.log(error);
 		}
 	};
-}
-
-export function filterByGenres(payload) {
-	return { type: FILTER_BY_GENRES, payload };
-}
-export function filterDb(payload) {
-	return { type: FILTER_BY_Db, payload };
 }
 
 export const getDetail = (id) => {
@@ -96,6 +88,12 @@ export const getDetail = (id) => {
 		}
 	};
 };
+export function filterByGenres(payload) {
+	return { type: FILTER_BY_GENRES, payload };
+}
+export function filterDb(payload) {
+	return { type: FILTER_BY_Db, payload };
+}
 
 export const clearDetail = (payload) => {
 	return {
@@ -114,18 +112,29 @@ export const createGame = (payload) => {
 	};
 };
 
-
-export function sortByAlph(payload){
+export function sortByAlph(payload) {
 	return {
-		type: BY_ALPH,
+		type    : BY_ALPH,
 		payload
-	}
+	};
 }
 
-
-export function sortByRating(payload){
+export function sortByRating(payload) {
 	return {
-		type: BY_RATING,
+		type    : BY_RATING,
 		payload
-	}
+	};
+}
+
+export function destroyGame(id) {
+	return async function(dispatch) {
+		try {
+			const response = await axios.delete(`${URL_GET}${id}`);
+			console.log('esto deberia ser el string que devuelve el back', response);
+			return dispatch({
+				type : DESTROY,
+				payload : response.data
+			});
+		} catch (error) {}
+	};
 }

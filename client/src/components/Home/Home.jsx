@@ -26,7 +26,7 @@ const Home = () => {
 
 	// //--------------paginado
 	const [ currentPage, setCurrentPage ] = useState(1); //Pagina actual
-	const [ gamesByPage, setGamesByPage ] = useState(3); // Cuantos paises por page
+	const [ gamesByPage, setGamesByPage ] = useState(15); // Cuantos paises por page
 	const lastGame = currentPage * gamesByPage;
 	const firstGame = lastGame - gamesByPage;
 	const currentGame = videogames && videogames.slice(firstGame, lastGame); //
