@@ -13,7 +13,7 @@ process.env.NODE_ENV === "production"
 		port: 5432,
 		username: DB_USER,
 		password: DB_PASSWORD,
-		pool:{
+		poot:{
 			max:3,
 			min:1,
 			idle:10000
