@@ -64,7 +64,7 @@ const Home = () => {
 	return (
 		<div>
 			<button className={s.volver} onClick={(e) => handleClick(e)}>
-				volver⮨
+				RELOAD⮨
 			</button>
 
 			<div className={s.container}>

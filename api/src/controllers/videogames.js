@@ -168,7 +168,6 @@ async function createGame(req, res, next) {
 
 async function deleteGame(req, res, next) {
 	try {
-		
 		const id = req.params.idVideogame;
 		let videogame = await Videogame.destroy({
 			where   : { id: id },
@@ -176,12 +175,13 @@ async function deleteGame(req, res, next) {
 				model      : Genre,
 				attributes : [ 'name' ]
 			}
-		});		
-		
-		res.send( "Complete Destruction ");
+		});
+
+		res.send('Complete Destruction ');
 	} catch (error) {
-		console.log('videogame cannot be deleted', error)
+		console.log('videogame cannot be deleted', error);
 	}
 }
+
 
 module.exports = { getAllGames, getById, createGame, deleteGame };

@@ -126,15 +126,17 @@ export function sortByRating(payload) {
 	};
 }
 
-export function destroyGame(id) {
+export function destroyGame(payload) {
 	return async function(dispatch) {
 		try {
-			const response = await axios.delete(`${URL_GET}${id}`);
+			const response = await axios.delete(`${URL_GET}${payload}`);
 			console.log('esto deberia ser el string que devuelve el back', response);
 			return dispatch({
-				type : DESTROY,
-				payload : response.data
+				type    : DESTROY,
+				payload : response
 			});
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
