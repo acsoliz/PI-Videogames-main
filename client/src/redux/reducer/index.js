@@ -98,6 +98,7 @@ export default function rootReducer(state = initialState, action) {
 			};
 		case BY_ALPH: {
 			// console.log("deberia ser a-z o z-a:  ",action.payload)
+			console.log(state.videogames)
 			const byAlph =
 
 					action.payload === 'a-z' ? state.videogames.sort((a, b) => {
@@ -118,6 +119,7 @@ export default function rootReducer(state = initialState, action) {
 						}
 						return 0;
 					});
+					console.log("Seberia estar ordenado",byAlph)
 			return {
 				...state,
 				videogames : byAlph

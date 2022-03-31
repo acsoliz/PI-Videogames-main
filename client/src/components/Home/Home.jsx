@@ -35,8 +35,7 @@ const Home = () => {
 	const firstGame = lastGame - gamesByPage;
 	const currentGame = videogames && videogames.slice(firstGame, lastGame); //
 
-	
-  //////////////////////////////////////////////traigo los videojuegos cuando el componente se monta
+	//----------------trraigo los videojuegos cuando el componente se monta
 
 	const [ auxiliar, setAuxiliar ] = useState(); //Pagina actual
 	useEffect(() => {            
@@ -88,15 +87,16 @@ const Home = () => {
 				<div className={s.controlls}>
 					<div>
 						<select onChange={(e) => handleOnChange(e)}>
+							<option value={'All'}>Genres</option>
 							{genres && genres.map((el, i) => <option key={i}>{el.name}</option>)}
 						</select>
 					</div>
 					<div>
 						<select className={s.selectFilter} onChange={(e) => handleDbFilter(e)}>
 							{/* <option defaultValue="true" disabled="disabled">Creation</option> */}
-							<option value={'All'}>Todos</option>
+							<option value={'All'}>From</option>
 							<option value={true}>Created</option>
-							<option value={false}>Not Created</option>
+							<option value={false}>From Api</option>
 						</select>
 					</div>
 
@@ -108,7 +108,7 @@ const Home = () => {
 									handleSortAlph(e);
 								}}
 							>
-								<option disabled="disabled">a-z or za</option>
+								<option >a-z or za</option>
 								<option value="a-z">A-Z</option>
 								<option value="z-a">Z-A</option>
 							</select>
@@ -122,7 +122,7 @@ const Home = () => {
 									habdleSortRating(e);
 								}}
 							>
-								<option disabled="disabled">Rating</option>
+								<option >Rating</option>
 								<option value="most">Most</option>
 								<option value="less">Less</option>
 							</select>

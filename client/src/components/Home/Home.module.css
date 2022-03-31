@@ -19,6 +19,7 @@
 .containerAllGames {
     /* border-style: groove; */
 	border-radius: 20px;
+    
    
 }
 .toCreate{
@@ -28,6 +29,8 @@
     padding-right: 100px;
 	float: right;
     padding-top: 28px;
+    text-decoration: none;
+    color:aliceblue
 }
 .search{
     /* border-style:groove;

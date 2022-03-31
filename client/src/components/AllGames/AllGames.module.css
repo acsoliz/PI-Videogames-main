@@ -11,3 +11,16 @@
 .filter{
     filter: drop-shadow(0 0 50px blue);
 }
+.messageError{
+    /* width: 3rem; */
+    
+   
+
+}
+
+.messageText{ 
+    color: rgba(252, 249, 249, 0.582);
+    text-align: center;
+    text-align-last: center;
+    text-decoration-color: beige; 
+}

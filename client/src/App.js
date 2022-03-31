@@ -7,6 +7,8 @@ import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import Detail from './components/Details/Detail';
 import Form from './components/Form/Form';
+
+
 function App() {
 	const dispatch = useDispatch();
 
@@ -14,6 +16,10 @@ function App() {
 		dispatch(getAllGames());
 		dispatch(getGenres())
 	}, []);
+
+	useEffect(()=>{
+
+	})
 
 	return (
 		<div className="App">

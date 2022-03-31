@@ -7,9 +7,11 @@ export default function Form() {
 	const dispatch = useDispatch();
 	// const history = useNavigate();
 	let stateGenres = useSelector((state) => state.genres);
-	let allGenres = stateGenres.map((e) => (e = e.name));
-	let navigate = useNavigate()
 	let allPlatforms = useSelector((state) => state.platforms);
+	let videogames = useSelector((state) => state.videogames);
+	// console.log(videogames[0]);
+	let allGenres = stateGenres.map((e) => (e = e.name));
+	let navigate = useNavigate();
 
 	const [ state, setstate ] = useState({
 		name        : '',
@@ -29,7 +31,7 @@ export default function Form() {
 		genres      : '',
 		platforms   : ''
 	});
-	
+
 	//----------------------->  name, rating, description, released IMAGE
 	const handleInputChange = function(e) {
 		e.preventDefault();
@@ -37,8 +39,19 @@ export default function Form() {
 			...state,
 			[e.target.name]: e.target.value
 		});
-		validate(e.target.name, e.target.value);
+		validate(e.target.name, e.target.value);		
 	};
+	/////   Esto es para verificar si value (name) 
+	function auxiliar(value) {
+		// console.log("Estoy recorriendo viegoames en busca de un nombre: ", value name)
+		// antes de esto me traigo del state.videogames
+		for (var i = 0; i < videogames.length; i++) {
+			if (videogames[i].name == value) {
+				return true
+			}
+		}
+		return false	
+	}
 	//------------>  GENERO
 	const handleGenreChange = function(e) {
 		if (!state.genres.includes(e.target.value)) {
@@ -62,16 +75,15 @@ export default function Form() {
 	};
 	// //--------------->   PLATFORMS
 	const handlePlatformsChange = function(e) {
-		if (!state.platforms.includes(e.target.value)) {
+ 		if (!state.platforms.includes(e.target.value)) {
 			setstate({
 				...state,
 				platforms : [ ...state.platforms, e.target.value ]
 			});
 			setError({
 				...error,
-				platforms: ''
+				platforms : ''
 			});
-
 		}
 	};
 	const handlePlatformDelete = function(e) {
@@ -83,10 +95,10 @@ export default function Form() {
 		});
 	};
 
-	///////////////////////////////////////////////
+	//-------------
 	function validateSubmit() {
 		var asignErrors = {};
-	
+
 		if (!state.platforms.length) {
 			asignErrors = { ...asignErrors, platforms: 'Must select at least one platform' };
 		}
@@ -101,9 +113,8 @@ export default function Form() {
 		}
 
 		setError({ ...error, ...asignErrors });
-	
-		return Object.values({ ...error, ...asignErrors }).filter((value) => value !== '');
 
+		return Object.values({ ...error, ...asignErrors }).filter((value) => value !== '');
 	}
 
 	// ----------------> POSTEO
@@ -114,7 +125,7 @@ export default function Form() {
 			try {
 				dispatch(createGame(state));
 				alert('VideoGame Created! ');
-				navigate("/home/")
+				navigate('/home/');
 			} catch (error) {
 				// console.log(error);
 			}
@@ -122,8 +133,6 @@ export default function Form() {
 			// console.log('atenti soy el Flag para validar: ', flag);
 			alert('Missing or invalid values');
 		}
-
-		// dispatch(getAllGames())
 	};
 
 	useEffect(
@@ -139,6 +148,10 @@ export default function Form() {
 			case 'name':
 				if (value === '') {
 					return setError({ ...error, name: '' });
+				}
+				if(auxiliar(value)){
+					// console.log("entre al if")
+					return setError({ ...error, name: 'There is a game with that name, please change it'})
 				}
 				if (!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)) {
 					return setError({ ...error, name: 'Not special characters' });
@@ -170,13 +183,14 @@ export default function Form() {
 				if (value === '') {
 					return setError({ ...error, rating: '' });
 				}
-			// 	if (!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)) {
-			// 		return setError({ ...error, rating: 'Should only be numeric characters' });
-			// 	} else if (parseFloat(value) < 1 || parseFloat(value) > 5) {
-			// 		return setError({ ...error, rating: 'Should be between 1-5' });
-			// 	} else {
-			// 		return setError({ ...error, rating: '' });
-			// 	}
+				// if (!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)) {
+				// 	return setError({ ...error, rating: 'you must choose an element in the rating field' });
+				// } else 
+				if (parseFloat(value) < 1 || parseFloat(value) > 5) {
+					return setError({ ...error, rating: 'you must choose an element in the rating field' });
+				} else {
+					return setError({ ...error, rating: '' });
+				}
 			default:
 				return error;
 		}

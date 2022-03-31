@@ -1,6 +1,6 @@
 import React from 'react';
 import VideoGame from '../VideoGame/VideoGame';
-import a from './AllGames.module.css';
+import s from './AllGames.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllGames, filterByGenres, filterDb, sortByAlph, sortByRating } from '../../redux/actions/index';
 
@@ -18,15 +18,15 @@ export default function AllGames({ currentGame }) {
 		dispatch(getAllGames());
 	}
 	return (
-		<div className={a.cards}>
+		<div className={s.cards}>
 			{
 				Array.isArray(currentGame) ? currentGame.map((e) => (
 					<div key={e.id}>
 						<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
 					</div>
 				)) :
-				<div>
-					<p>{message}</p>
+				<div className={s.messageError}>
+					<h3 className={s.messageText}>{message}</h3>
 
 					<button onClick={(e) => handleClick(e)}>volver⮨</button>
 				</div>}
