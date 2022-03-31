@@ -13,11 +13,11 @@ import {
 	DESTROY
 } from '../actions';
 const initialState = {
-	videogames    : [],//
-	videogamesAux : [],//
+	videogames    : [], //
+	videogamesAux : [], //
 	filters       : [],
-	details       : [],//
-	genres        : []//
+	details       : [], //
+	genres        : [] //
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -44,13 +44,12 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				details : action.payload
 			};
-			case CLEAR_DETAIL:
-				return {
-					...state,
-					details : []
-				};
+		case CLEAR_DETAIL:
+			return {
+				...state,
+				details : []
+			};
 		case GET_PLATFORMS:
-	
 			return {
 				...state,
 				platforms : action.payload
@@ -61,28 +60,41 @@ export default function rootReducer(state = initialState, action) {
 			};
 		case FILTER_BY_GENRES:
 			// videogamesAux es un COPIA  de mi estado y se carga con todos los juegos en GET_Videogames
-			const getGenres = videogamesAux
-			const gamesFiltered =
+			if (!state.filters[0]) {
+				const getGenres = videogamesAux;
+				const gamesFiltered =
 
-					action.payload === 'All' ? getGenres :
-					getGenres.filter((el) => el.genres.includes(action.payload));
+						action.payload === 'All' ? getGenres :
+						getGenres.filter((el) => el.genres.includes(action.payload));
+				console.log('Deberia ser un array con todos los elementos  by genres', gamesFiltered);
+				return {
+					...state,
+					videogames : gamesFiltered // gamesFiltered tiene todos los jueos ya filtrados
+				};
+			} else {
+				const filtrados = state.filters;
+				let filtersByDBandGenres =
+				
+				action.payload === 'All' ? filtrados :
+				filtrados.filter((el) => el.genres.includes(action.payload));
+				console.log('Deberia ser un array con todos los elementos  by genres', filtersByDBandGenres);
+				return {
+					...state,
+					videogames : filtersByDBandGenres // gamesFiltered tiene todos los jueos ya filtrados
+				};
+			}
 
-			return {
-				...state,
-				videogames    : gamesFiltered, // gamesFiltered tiene todos los jueos ya filtrados
-				
-				
-			};
 		case FILTER_BY_Db:
-			const getGamesByDb = videogamesAux
+			const getGamesByDb = videogamesAux;
 			const gamesDbFilter =
 
-					action.payload === 'All' ?getGamesByDb :
+					action.payload === 'All' ? getGamesByDb :
 					getGamesByDb.filter((el) => el.db.toString() === action.payload.toString());
 
 			return {
 				...state,
-				videogames : gamesDbFilter
+				videogames : gamesDbFilter,
+				filters    : gamesDbFilter
 			};
 		case BY_ALPH: {
 			// console.log("deberia ser a-z o z-a:  ",action.payload)
@@ -135,8 +147,7 @@ export default function rootReducer(state = initialState, action) {
 				videogames : sortByRating
 			};
 		}
-		case DESTROY : {
-
+		case DESTROY: {
 		}
 		default:
 			return state;

@@ -5,21 +5,11 @@ const API_GENRES = 'https://api.rawg.io/api/genres?key=';
 const API_GAMES = 'https://api.rawg.io/api/games?key=';
 const { API_KEY } = process.env;
 
-
 conn.sync({ force: false }).then(async () => {
 	//             ----------------  Lleno la tabla Genres----------------------
 
-	server.listen(process.env.PORT, () => {
-		console.log('%s listening at 3001'); // eslint-disable-line no-console
-	});
-	
-});
-
-
-
- async function loadAll() {
 	const maxId = await Videogame.max('id');
-	console.log(maxId, 'soy el id');
+	console.log(maxId, "soy el id");
 	if (!maxId) {
 		const AllGenres = await axios(`${API_GENRES}${API_KEY}`);
 
@@ -88,5 +78,8 @@ conn.sync({ force: false }).then(async () => {
 			console.log(error);
 		}
 	}
-}
-loadAll()
+
+	server.listen(process.env.PORT, () => {
+		console.log('%s listening at 3001'); // eslint-disable-line no-console
+	});
+});

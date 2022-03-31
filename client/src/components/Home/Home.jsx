@@ -4,15 +4,19 @@ import VideoGame from '../VideoGame/VideoGame';
 import SearchBar from '../SearchBar/SearchBar';
 import Paginated from '../Paginated/Paginated';
 import AllGames from '../AllGames/AllGames';
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import s from './Home.module.css';
+
+
+
+
 const Home = () => {
 	const dispatch = useDispatch();
 	const videogames = useSelector((state) => state.videogames);
 	const genres = useSelector((state) => state.genres);
 
-	//--------------mostrar los paises
+	//--------------mostrar los vIDEOJUEGOS
 	function handleOnChange(e) {
 		e.preventDefault();
 		if (e.target.value === '') return dispatch(getAllGames());
@@ -26,15 +30,21 @@ const Home = () => {
 
 	// //--------------paginado
 	const [ currentPage, setCurrentPage ] = useState(1); //Pagina actual
-	const [ gamesByPage, setGamesByPage ] = useState(15); // Cuantos paises por page
+	const [ gamesByPage, setGamesByPage ] = useState(15); // Cuantos videojuegos por page
 	const lastGame = currentPage * gamesByPage;
 	const firstGame = lastGame - gamesByPage;
 	const currentGame = videogames && videogames.slice(firstGame, lastGame); //
 
-	if (currentGame.length == 0) {
-		
-		
-	}
+	
+  //////////////////////////////////////////////traigo los videojuegos cuando el componente se monta
+
+	const [ auxiliar, setAuxiliar ] = useState(); //Pagina actual
+	useEffect(() => {            
+    setAuxiliar(videogames)
+	setCurrentPage(1)
+	console.log(videogames[0])
+  }, [videogames])              //de lo que depende
+
 
 	const paginated = (pageNum) => {
 		setCurrentPage(pageNum);

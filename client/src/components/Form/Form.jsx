@@ -8,7 +8,7 @@ export default function Form() {
 	// const history = useNavigate();
 	let stateGenres = useSelector((state) => state.genres);
 	let allGenres = stateGenres.map((e) => (e = e.name));
-
+	let navigate = useNavigate()
 	let allPlatforms = useSelector((state) => state.platforms);
 
 	const [ state, setstate ] = useState({
@@ -29,6 +29,7 @@ export default function Form() {
 		genres      : '',
 		platforms   : ''
 	});
+	
 	//----------------------->  name, rating, description, released IMAGE
 	const handleInputChange = function(e) {
 		e.preventDefault();
@@ -113,7 +114,7 @@ export default function Form() {
 			try {
 				dispatch(createGame(state));
 				alert('VideoGame Created! ');
-				<Link to="/home/" />
+				navigate("/home/")
 			} catch (error) {
 				// console.log(error);
 			}

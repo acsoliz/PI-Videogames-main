@@ -5,7 +5,7 @@ export default function Paginated ({videogames, gamesByPage, paginated}){
         const pageNum = [];
     // console.log("Hola desde el paginadooo!", paginated)
 
-    for(var i=1; i<=Math.ceil(videogames / gamesByPage); i++){
+    for(let i=1; i<=Math.ceil(videogames / gamesByPage); i++){
         pageNum.push(i);
     }
 
