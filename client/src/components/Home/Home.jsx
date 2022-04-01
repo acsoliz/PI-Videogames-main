@@ -41,11 +41,11 @@ const Home = () => {
 	useEffect(() => {            
     setAuxiliar(videogames)
 	setCurrentPage(1)
-	console.log(videogames[0])
   }, [videogames])              //de lo que depende
 
 
 	const paginated = (pageNum) => {
+		console.log("Estoy dentro de PAGINATED ")
 		setCurrentPage(pageNum);
 	};
 	//---------------------------------------
@@ -72,6 +72,7 @@ const Home = () => {
 
 	return (
 		<div>
+			{console.log("Home ",currentPage)}
 			<button className={s.volver} onClick={(e) => handleClick(e)}>
 				RELOAD⮨
 			</button>
@@ -135,6 +136,8 @@ const Home = () => {
 						videogames={videogames && videogames.length}
 						gamesByPage={gamesByPage}
 						paginated={paginated}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
 					/>
 				</div>
 				<div className={s.containerAllGames}>
@@ -144,6 +147,8 @@ const Home = () => {
 					videogames={videogames && videogames.length}
 					gamesByPage={gamesByPage}
 					paginated={paginated}
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
 				/>
 			</div>
 		</div>

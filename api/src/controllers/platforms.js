@@ -11,4 +11,10 @@ async function getPlatforms(req, res, next) {
 	allPlatforms = allPlatforms.data.results.map((e) => e.name);
 	res.send(allPlatforms);
 }
+
+
+
 module.exports = { getPlatforms };
+
+
+

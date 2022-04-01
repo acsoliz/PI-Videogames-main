@@ -10,7 +10,7 @@ import {
 	GET_PLATFORMS,
 	BY_ALPH,
 	BY_RATING,
-	DESTROY
+
 } from '../actions';
 const initialState = {
 	videogames    : [], //
@@ -98,7 +98,7 @@ export default function rootReducer(state = initialState, action) {
 			};
 		case BY_ALPH: {
 			// console.log("deberia ser a-z o z-a:  ",action.payload)
-			console.log(state.videogames)
+			// console.log(state.videogames)
 			const byAlph =
 
 					action.payload === 'a-z' ? state.videogames.sort((a, b) => {
@@ -149,8 +149,7 @@ export default function rootReducer(state = initialState, action) {
 				videogames : sortByRating
 			};
 		}
-		case DESTROY: {
-		}
+		
 		default:
 			return state;
 	}

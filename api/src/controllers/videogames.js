@@ -164,7 +164,6 @@ async function createGame(req, res, next) {
 	}
 }
 
-//--------------------------------------DELETE -------------------------------------------------
 
 async function deleteGame(req, res, next) {
 	try {
