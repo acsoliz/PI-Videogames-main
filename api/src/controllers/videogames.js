@@ -4,12 +4,16 @@ const { Op } = require('sequelize');
 const router = express();
 const { Videogame, Genre } = require('../db');
 const { API_KEY } = process.env;
+const API_GENRES = 'https://api.rawg.io/api/genres?key=';
+const API_GAMES = 'https://api.rawg.io/api/games?key=';
 
 //_____________ All Characters && Filter By Name_________
 async function getAllGames(req, res, next) {
 	const { name } = req.query;
+	// console.log("Me estan enviando esto desde el Front",name)
 	try {
 		if (!name) {
+			//---- ALL
 			let AllGames = await Videogame.findAll({
 				include : {
 					model      : Genre,
@@ -26,9 +30,36 @@ async function getAllGames(req, res, next) {
 					rating           : e.rating
 				};
 			});
+			//------------------ traigo la info de mi API
 
-			res.send(AllGames); //
+			let array = [];
+			for (let i = 1; i < 6; i++) {
+				const resultsArray = await axios(`${API_GAMES}${API_KEY}&page=${i}`);
+				array.push(resultsArray.data.results);
+			}
+			array = array.flat(); //
+
+			array = array.map((el) => {
+				// foreach
+				return {
+					id               : el.id,
+					name             : el.name,
+					background_image : el.background_image,
+					rating           : el.rating,
+					platforms        :
+						el.platforms.length[2] ? el.platforms.map((e) => e.platforms.name) :
+						'--',
+					genres           : el.genres.map((el) => el.name).join(', '),
+					released         : el.released
+				};
+			});
+			// console.log('verificando una vez mas las rutas ', array[0], AllGames[0]);
+			const apiWhithDb = [ ...array, ...AllGames ];
+			// console.log(apiWhithDb.length);
+
+			res.send(apiWhithDb); //
 		} else {
+			//------------By Name
 			let byName;
 			byName = await Videogame.findAll({
 				where : {
@@ -37,11 +68,32 @@ async function getAllGames(req, res, next) {
 					}
 				}
 			});
+			let response = (await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`));
+			// console.log(response.data.results[0])
+			var responseApi = response.data.results[0] && response.data.results.map((el) => {
+				// foreach
+				return {
+					id               : el.id,
+					name             : el.name,
+					background_image : el.background_image,
+					rating           : el.rating,
+					platforms        :
+					el.platforms.length[2] ? el.platforms.map((e) => e.platforms.name) :
+					'--',
+					genres           : el.genres.map((el) => el.name).join(', '),
+					released         : el.released
+				};
+			});
+			if (!responseApi){
+				return res.send("We can't find the VideoGame, please check the name ");
+			}
+			const responseALl = [...byName, ... responseApi ]
+			console.log("Soy la response de APi y DB ", responseALl)
 
-			if (byName.length < 1) {
+			if (responseALl.length < 1) {
 				res.send("We can't find the VideoGame, please check the name ");
 				// res.status(404).send("We can't find the VideoGame, please check the name ");
-			} else res.send(byName);
+			} else res.send(responseALl);
 		}
 	} catch (error) {
 		console.log(error);
@@ -164,6 +216,7 @@ async function createGame(req, res, next) {
 	}
 }
 
+//--------------------------------------DELETE -------------------------------------------------
 
 async function deleteGame(req, res, next) {
 	try {
@@ -181,6 +234,5 @@ async function deleteGame(req, res, next) {
 		console.log('videogame cannot be deleted', error);
 	}
 }
-
 
 module.exports = { getAllGames, getById, createGame, deleteGame };

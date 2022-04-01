@@ -6,9 +6,11 @@
 }
 .button {
 	/* cursor: pointer; */
-	font-size:1cm;
+	font-size:0,9cm;
     padding: 1rem;
-	color:darkorchid
+	color:rgb(239, 236, 240);
+	font-weight: bold;
+	
 }
 .button:hover {
 	color: #0000db;

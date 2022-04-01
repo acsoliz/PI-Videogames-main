@@ -9,8 +9,7 @@ import {
 	CLEAR_DETAIL,
 	GET_PLATFORMS,
 	BY_ALPH,
-	BY_RATING,
-
+	BY_RATING
 } from '../actions';
 const initialState = {
 	videogames    : [], //
@@ -74,9 +73,9 @@ export default function rootReducer(state = initialState, action) {
 			} else {
 				const filtrados = state.filters;
 				let filtersByDBandGenres =
-				
-				action.payload === 'All' ? filtrados :
-				filtrados.filter((el) => el.genres.includes(action.payload));
+
+						action.payload === 'All' ? filtrados :
+						filtrados.filter((el) => el.genres.includes(action.payload));
 				console.log('Deberia ser un array con todos los elementos  by genres', filtersByDBandGenres);
 				return {
 					...state,
@@ -86,16 +85,31 @@ export default function rootReducer(state = initialState, action) {
 
 		case FILTER_BY_Db:
 			const getGamesByDb = videogamesAux;
-			const gamesDbFilter =
+			// console.log(action.payload.toString()== "false")
+			if (action.payload.toString() == 'true') {
+				const gamesDbFilter =
 
-					action.payload === 'All' ? getGamesByDb :
-					getGamesByDb.filter((el) => el.db.toString() === action.payload.toString());
+						action.payload === 'All' ? getGamesByDb :
+						!action.payload ? console.log('hola') :
+						getGamesByDb.filter((el) => el.db && el.db.toString() === action.payload.toString());
 
-			return {
-				...state,
-				videogames : gamesDbFilter,
-				filters    : gamesDbFilter
-			};
+				return {
+					...state,
+					videogames : gamesDbFilter,
+					filters    : gamesDbFilter
+				};
+			}
+			console.log("en la siguiente linea entro al else")
+			if (action.payload.toString()== 'false'){
+				console.log("soy el else")
+
+				const gamesApiFilter = getGamesByDb.filter((el) => !el.hasOwnProperty('db'));
+				return {
+					...state,
+					videogames : gamesApiFilter,
+					filters    : gamesApiFilter
+				};
+			}
 		case BY_ALPH: {
 			// console.log("deberia ser a-z o z-a:  ",action.payload)
 			// console.log(state.videogames)
@@ -119,7 +133,7 @@ export default function rootReducer(state = initialState, action) {
 						}
 						return 0;
 					});
-					console.log("Seberia estar ordenado",byAlph)
+			console.log('Seberia estar ordenado', byAlph);
 			return {
 				...state,
 				videogames : byAlph
@@ -149,7 +163,7 @@ export default function rootReducer(state = initialState, action) {
 				videogames : sortByRating
 			};
 		}
-		
+
 		default:
 			return state;
 	}

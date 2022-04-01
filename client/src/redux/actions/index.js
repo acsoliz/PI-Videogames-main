@@ -30,13 +30,29 @@ export const getAllGames = () => {
 	};
 };
 
+
+// export const getPlatforms = () => {
+// 	return async (dispatch) => {
+// 		try {
+// 			const json = await axios.get(API_PLATFORMS);
+// 			return dispatch({
+// 				type    : GET_PLATFORMS,
+// 				payload : json.data
+// 			});
+// 		} catch (error) {
+// 			console.log(error);
+// 		}
+// 	};
+// };
 export const getPlatforms = () => {
-	return async (dispatch) => {
+	console.log("Probando las nuevas platforms")
+	return (dispatch) => {
 		try {
-			const json = await axios.get(API_PLATFORMS);
-			return dispatch({
-				type    : GET_PLATFORMS,
-				payload : json.data
+			return axios.get(API_PLATFORMS).then((res) => {
+				dispatch({
+					type    : GET_PLATFORMS,
+					payload : res.data
+				});
 			});
 		} catch (error) {
 			console.log(error);
@@ -57,9 +73,23 @@ export const getGenres = () => {
 		}
 	};
 };
+
+// export const getGenres = ()=>{
+// 	return (dispatch)=>{
+// 		return axios.get(API_GENRES)
+// 		.then((res)=>{
+// 			dispatch({
+// 				type    : GET_GENRE,
+// 				payload : const styles = res.data
+// 			})
+// 		})
+// 	}
+// }
+
 export function getByName(name) {
 	return async function(dispatch) {
 		try {
+			// console.log((URL_NAME_GET + name))
 			var json = await axios.get(URL_NAME_GET + name);
 
 			if (!Array.isArray(json.data)) {
@@ -75,17 +105,28 @@ export function getByName(name) {
 	};
 }
 
+// export const getDetail = (id) => {
+// 	return async function(dispatch) {
+// 		try {
+// 			const json = await axios.get(`${URL_GET}${id}`);
+// 			return dispatch({
+// 				type    : GET_DETAIL,
+// 				payload : json.data
+// 			});
+// 		} catch (error) {
+// 			console.log(error);
+// 		}
+// 	};
+// };
 export const getDetail = (id) => {
-	return async function(dispatch) {
-		try {
-			const json = await axios.get(`${URL_GET}${id}`);
-			return dispatch({
+	console.log('soy el nuevo detalle');
+	return function(dispatch) {
+		return axios.get(`${URL_GET}${id}`).then((res) => {
+			dispatch({
 				type    : GET_DETAIL,
-				payload : json.data
+				payload : res.data
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		});
 	};
 };
 export function filterByGenres(payload) {

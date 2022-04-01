@@ -19,17 +19,22 @@ export default function AllGames({ currentGame }) {
 	}
 	return (
 		<div className={s.cards}>
-			{
-				Array.isArray(currentGame) ? currentGame.map((e) => (
-					<div key={e.id}>
-						<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
-					</div>
-				)) :
-				<div className={s.messageError}>
-					<h3 className={s.messageText}>{message}</h3>
+			{currentGame[0]?
+				<>
+					{
+						Array.isArray(currentGame) ? currentGame.map((e) => (
+							<div key={e.id}>
+								<VideoGame name={e.name} image={e.background_image} genres={e.genres} id={e.id} />
+							</div>
+						)) :
+						<div className={s.messageError}>
+							<h3 className={s.messageText}>{message}</h3>
 
-					<button onClick={(e) => handleClick(e)}>volver⮨</button>
-				</div>}
+							<button onClick={(e) => handleClick(e)}>volver⮨</button>
+						</div>}
+				</>:
+				<h2>Loading... </h2>
+			}
 		</div>
 	);
 }

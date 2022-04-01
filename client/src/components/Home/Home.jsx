@@ -4,12 +4,9 @@ import VideoGame from '../VideoGame/VideoGame';
 import SearchBar from '../SearchBar/SearchBar';
 import Paginated from '../Paginated/Paginated';
 import AllGames from '../AllGames/AllGames';
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Home.module.css';
-
-
-
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -38,14 +35,16 @@ const Home = () => {
 	//----------------trraigo los videojuegos cuando el componente se monta
 
 	const [ auxiliar, setAuxiliar ] = useState(); //Pagina actual
-	useEffect(() => {            
-    setAuxiliar(videogames)
-	setCurrentPage(1)
-  }, [videogames])              //de lo que depende
-
+	useEffect(
+		() => {
+			setAuxiliar(videogames);
+			setCurrentPage(1);
+		},
+		[ videogames ]
+	); //de lo que depende
 
 	const paginated = (pageNum) => {
-		console.log("Estoy dentro de PAGINATED ")
+		console.log('Estoy dentro de PAGINATED ');
 		setCurrentPage(pageNum);
 	};
 	//---------------------------------------
@@ -72,7 +71,7 @@ const Home = () => {
 
 	return (
 		<div>
-			{console.log("Home ",currentPage)}
+			{console.log('Home ', currentPage)}
 			<button className={s.volver} onClick={(e) => handleClick(e)}>
 				RELOAD⮨
 			</button>
@@ -109,7 +108,7 @@ const Home = () => {
 									handleSortAlph(e);
 								}}
 							>
-								<option >a-z or za</option>
+								<option>a-z or za</option>
 								<option value="a-z">A-Z</option>
 								<option value="z-a">Z-A</option>
 							</select>
@@ -123,7 +122,7 @@ const Home = () => {
 									habdleSortRating(e);
 								}}
 							>
-								<option >Rating</option>
+								<option>Rating</option>
 								<option value="most">Most</option>
 								<option value="less">Less</option>
 							</select>
@@ -132,24 +131,28 @@ const Home = () => {
 				</div>
 
 				<div className={s.paginated}>
-					<Paginated
+					{
+						Array.isArray(videogames) ? <Paginated
+							videogames={videogames && videogames.length}
+							gamesByPage={gamesByPage}
+							paginated={paginated}
+							currentPage={currentPage}
+							setCurrentPage={setCurrentPage}
+						/> :
+						''}
+				</div>
+				<div className={s.containerAllGames}>
+					<AllGames currentGame={currentGame} className={s.cards} />
+				</div>
+				{
+					Array.isArray(videogames) ? <Paginated
 						videogames={videogames && videogames.length}
 						gamesByPage={gamesByPage}
 						paginated={paginated}
 						currentPage={currentPage}
 						setCurrentPage={setCurrentPage}
-					/>
-				</div>
-				<div className={s.containerAllGames}>
-					<AllGames currentGame={currentGame} className={s.cards} />
-				</div>
-				<Paginated
-					videogames={videogames && videogames.length}
-					gamesByPage={gamesByPage}
-					paginated={paginated}
-					currentPage={currentPage}
-					setCurrentPage={setCurrentPage}
-				/>
+					/> :
+					''}
 			</div>
 		</div>
 	);
