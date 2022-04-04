@@ -237,20 +237,7 @@ export default function Form() {
 						{/* <span>{error.rating}</span> */}
 					</div>
 					<br />
-					<div>
-						<label>💭Description: </label>
-						<textarea
-							name="description"
-							id=""
-							cols="30"
-							rows="10"
-							name="description"
-							value={state.description}
-							onChange={handleInputChange}
-						/>
-						<span>{error.description}</span>
-					</div>
-					<br />
+					
 					<div>
 						<label>📆Release: </label>
 						<input name="released" type="date" value={state.released} onChange={handleInputChange} />
@@ -315,6 +302,20 @@ export default function Form() {
 							placeholder="Ingrese la URL de la imagen"
 						/>
 						<span>{error.image}</span>
+					</div>
+					<br />
+					<div>
+						<label>💭Description: </label>
+						<textarea
+							name="description"
+							id=""
+							cols="30"
+							rows="10"
+							name="description"
+							value={state.description}
+							onChange={handleInputChange}
+						/>
+						<span>{error.description}</span>
 					</div>
 					<br />
 					<button type="submit">Create Game</button>
