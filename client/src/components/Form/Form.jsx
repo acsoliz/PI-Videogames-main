@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGame, getGenres, getPlatforms } from '../../redux/actions/index';
+import s from './Form.module.css';
 
 export default function Form() {
 	const dispatch = useDispatch();
@@ -39,18 +40,18 @@ export default function Form() {
 			...state,
 			[e.target.name]: e.target.value
 		});
-		validate(e.target.name, e.target.value);		
+		validate(e.target.name, e.target.value);
 	};
-	/////   Esto es para verificar si value (name) 
+	/////   Esto es para verificar si value (name)
 	function auxiliar(value) {
 		// console.log("Estoy recorriendo viegoames en busca de un nombre: ", value name)
 		// antes de esto me traigo del state.videogames
 		for (var i = 0; i < videogames.length; i++) {
 			if (videogames[i].name == value) {
-				return true
+				return true;
 			}
 		}
-		return false	
+		return false;
 	}
 	//------------>  GENERO
 	const handleGenreChange = function(e) {
@@ -75,7 +76,7 @@ export default function Form() {
 	};
 	// //--------------->   PLATFORMS
 	const handlePlatformsChange = function(e) {
- 		if (!state.platforms.includes(e.target.value)) {
+		if (!state.platforms.includes(e.target.value)) {
 			setstate({
 				...state,
 				platforms : [ ...state.platforms, e.target.value ]
@@ -149,9 +150,9 @@ export default function Form() {
 				if (value === '') {
 					return setError({ ...error, name: '' });
 				}
-				if(auxiliar(value)){
+				if (auxiliar(value)) {
 					// console.log("entre al if")
-					return setError({ ...error, name: 'There is a game with that name, please change it'})
+					return setError({ ...error, name: 'There is a game with that name, please change it' });
 				}
 				if (!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)) {
 					return setError({ ...error, name: 'Not special characters' });
@@ -185,7 +186,7 @@ export default function Form() {
 				}
 				// if (!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)) {
 				// 	return setError({ ...error, rating: 'you must choose an element in the rating field' });
-				// } else 
+				// } else
 				if (parseFloat(value) < 1 || parseFloat(value) > 5) {
 					return setError({ ...error, rating: 'you must choose an element in the rating field' });
 				} else {
@@ -197,33 +198,35 @@ export default function Form() {
 	}
 
 	return (
-		<div>
-			<Link to="/home">HOME</Link>
-			<div>
-				<h1>CREATE A NEW VIDEOGAME</h1>
+		<div className={s.allContainer}>
+			<Link classname={s.linkToHome} to="/home">
+				HOME
+			</Link>
+			<h1 className={s.tittleCreator}>CREATE A NEW VIDEOGAME</h1>
+			<div className={s.formContainer}>
 				<form
 					onSubmit={(e) => {
 						handleSubmit(e);
 					}}
 				>
 					<div>
-						<label>🅰Name:</label>
+						<label>🅰Name: </label>
 						<input
+						className={s.inputStyle}
 							type="text"
 							name="name"
 							value={state.name}
 							onChange={handleInputChange}
-							placeholder="Ingrese un nombre"
+							placeholder="Ingrese un nombre "
 						/>
 						<span>{error.name}</span>
 					</div>
 					<br />
-
 					{
 						state.rating === '' ? <p>Asigna un rating</p> :
 						null}
 					<div>
-						<label>⭐Rating:</label>
+						<label>⭐Rating: </label>
 						<select name="rating" value={state.rating} onChange={handleInputChange}>
 							<option>1</option>
 							<option>2</option>
@@ -235,7 +238,7 @@ export default function Form() {
 					</div>
 					<br />
 					<div>
-						<label>💭Description:</label>
+						<label>💭Description: </label>
 						<textarea
 							name="description"
 							id=""
@@ -249,7 +252,7 @@ export default function Form() {
 					</div>
 					<br />
 					<div>
-						<label>📆Release:</label>
+						<label>📆Release: </label>
 						<input name="released" type="date" value={state.released} onChange={handleInputChange} />
 						<span>{error.released}</span>
 					</div>
@@ -279,7 +282,7 @@ export default function Form() {
 
 					<br />
 					<div>
-						<label> 🎮Platforms:</label>
+						<label> 🎮Platforms: </label>
 						<div>
 							<select name="platforms " onChange={(e) => handlePlatformsChange(e)}>
 								<option>--Select platforms--</option>
@@ -303,7 +306,7 @@ export default function Form() {
 
 					<br />
 					<div>
-						<label>📸image:</label>
+						<label>📸image: </label>
 						<input
 							type="text"
 							name="image"
