@@ -9,27 +9,30 @@ const API_GENRES = 'https://api.rawg.io/api/genres?key=';
 //______________________getAllGenres_ ______________________________________
 
 async function getAllGenres(req, res, next) {
-	const AllGenres = await axios(`${API_GENRES}${API_KEY}`);
-
-	const genres =
-		AllGenres &&
-		AllGenres.data.results.map((e) => {
-			return {
-				name : e.name
-			};
-		});
-	for (let genre of genres) {
-		Genre.create({
-			name : genre.name
-		});
-	}
-
-	try {
-	} catch (error) {
-		console.log('ERROR AL CREAR DB GENRES', error);
-	}
-
 	const { genre } = req.query;
+
+	if (!genre) {
+		const AllGenres = await axios(`${API_GENRES}${API_KEY}`);
+		console.log('estoy creando los generos');
+		const genres =
+			AllGenres &&
+			AllGenres.data.results.map((e) => {
+				return {
+					name : e.name
+				};
+			});
+		for (let genre of genres) {
+			Genre.create({
+				name : genre.name
+			});
+		}
+
+		try {
+		} catch (error) {
+			console.log('ERROR AL CREAR DB GENRES', error);
+		}
+	}
+
 	try {
 		let allgenres = await Genre.findAll({ attributes: [ 'name' ] });
 		const uniques = Array.from(new Set(allgenres.map((el) => el.name))).map((name) => {

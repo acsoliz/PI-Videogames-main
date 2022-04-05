@@ -24,3 +24,9 @@
 /* .nextPage {
 	float: right;
 } */
+.loading{
+	margin-top: 85px;
+	padding-top: 50px;
+	height: 400px;
+	font-size: 3.5em;
+}

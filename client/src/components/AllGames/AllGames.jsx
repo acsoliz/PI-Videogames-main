@@ -33,7 +33,7 @@ export default function AllGames({ currentGame }) {
 							<button onClick={(e) => handleClick(e)}>volver⮨</button>
 						</div>}
 				</>:
-				<h2>Loading... </h2>
+				<h1 className={s.loading}>Loading... </h1>
 			}
 		</div>
 	);
