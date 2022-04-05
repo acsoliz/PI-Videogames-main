@@ -1,26 +1,26 @@
 .cards {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 90%;
-    margin: 0 auto;
-    border-radius: 20px;
-  
-    justify-content: space-evenly;
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 90%;
+	margin: 0 auto;
+	border-radius: 20px;
+
+	justify-content: space-evenly;
 }
 
-.filter{
-    filter: drop-shadow(0 0 50px blue);
+.filter {
+	filter: drop-shadow(0 0 50px blue);
 }
-.messageError{
-    /* width: 3rem; */
-    
-   
-
+.messageError {
+	/* width: 3rem; */
 }
 
-.messageText{ 
-    color: rgba(252, 249, 249, 0.582);
-    text-align: center;
-    text-align-last: center;
-    text-decoration-color: beige; 
+.messageText {
+	color: rgba(252, 249, 249, 0.582);
+	text-align: center;
+	text-align-last: center;
+	text-decoration-color: beige;
 }
+/* .nextPage {
+	float: right;
+} */

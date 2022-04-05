@@ -12,8 +12,8 @@ export default function Paginated({ videogames, gamesByPage, paginated, currentP
     
 	return (
 		<div>
-     		{currentPage >1 ? <button onClick={()=>setCurrentPage(currentPage-1)}>Prev</button>: " "}
 			<div className={s.container}>
+     		{currentPage >1 ? <button onClick={()=>setCurrentPage(currentPage-1)}>Prev</button>: " "}
 				{pageNum &&
 					pageNum.map((e, i) => (
 						<label key={e} className={s.button} onClick={() => paginated(e)}>
@@ -21,8 +21,8 @@ export default function Paginated({ videogames, gamesByPage, paginated, currentP
 							{currentPage+i}{' '}
 						</label>
 					))}
+            {currentPage < pageNum.length? <button className={s.nextPage} onClick={()=>setCurrentPage(currentPage+1)}>Next</button>: " "}
 			</div>
-            {currentPage < pageNum.length? <button onClick={()=>setCurrentPage(currentPage+1)}>Next</button>: " "}
 		</div>
 	);
 }
