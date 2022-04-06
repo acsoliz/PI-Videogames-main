@@ -199,7 +199,7 @@ export default function Form() {
 
 	return (
 		<div className={s.allContainer}>
-			<Link classname={s.linkToHome} to="/home">
+			<Link className={s.linkToHome} to="/home">
 				HOME
 			</Link>
 			<h1 className={s.tittleCreator}>CREATE A NEW VIDEOGAME</h1>

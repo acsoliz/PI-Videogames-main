@@ -23,3 +23,11 @@
 /* .s.inputStyle {
 	background-color: rgba(233, 83, 37, 0.582);
 } */
+.linkToHome{
+	text-align:left;
+    float: left;
+    padding-right: 25px;
+	color: aliceblue;
+	padding-left: 1%;
+
+}

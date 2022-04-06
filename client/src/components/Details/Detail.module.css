@@ -20,28 +20,32 @@
 	flex-wrap: wrap;
 }
 .descriptionDiv {
-	/* border-style: groove; */
+
 	float: right;
 	text-align: right;
-	/* border-style: groove; */
+	border-style: groove;
 	width: 50%;
-	height: 60%;
+	height: 100%;
 	margin-top: 0%;
 	color: rgba(255, 255, 255, 0.794);
     text-decoration:solid;
 	text-align: center;
     line-height:30px;
     text-justify: distribute;
+	/* background-color: transparent; */
 }
 .cardContainer {
 	margin-top: 0%;
-	/* border-style: groove; */
+	border-style: groove;
 	float: left;
 	text-align: left;
-	float: right;
+	/* float: right; */
 	border-radius: 18px;
 	background-color: transparent;
     color: rgba(255, 255, 255, 0.794);
+	width: 44%;
+	/* height: 100%; */
+
 }
 .imageContainer {
 	border-radius: 18px;
@@ -58,7 +62,12 @@
 }
 
 .linkStyle{
-    text-align:right;
-    float: right;
+    text-align:left;
+    float: left;
     padding-right: 25px;
+	color: aliceblue;
+	padding-left: 1%;
+}
+.platformsDetail{
+	
 }

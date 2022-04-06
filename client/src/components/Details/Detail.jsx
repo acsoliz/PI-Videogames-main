@@ -7,15 +7,15 @@ import s from './Detail.module.css';
 export default function Detail() {
 	const dispatch = useDispatch();
 	const { id } = useParams();
-	useEffect(
-		() => {
+	// useEffect(
+	// 	() => {
+	// 	},
+	// 	[ dispatch ]
+	// 	);
+		
+		useEffect(
+			() => {
 			dispatch(clearDetail());
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
 			dispatch(getDetail(id));
 		},
 		[ dispatch ]
@@ -45,7 +45,7 @@ export default function Detail() {
 							<h4>Genero : {details.genresString && details.genresString.join(', ')}</h4>
 							<h4>Released: {details.released}</h4>
 							<h4>Rating: {details.rating}</h4>
-							<h4>Platforms : {details.platforms}</h4>
+							<h4 >Platforms : {details.platforms}</h4>
 						</div>
 						<div className={s.descriptionDiv}>
 							<h2>Description:</h2>
