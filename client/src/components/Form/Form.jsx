@@ -203,8 +203,9 @@ export default function Form() {
 				HOME
 			</Link>
 			<h1 className={s.tittleCreator}>CREATE A NEW VIDEOGAME</h1>
-			<div className={s.formContainer}>
+			<div>
 				<form
+					className={s.formContainer}
 					onSubmit={(e) => {
 						handleSubmit(e);
 					}}
@@ -212,14 +213,16 @@ export default function Form() {
 					<div>
 						<label>🅰Name: </label>
 						<input
-						className={s.inputStyle}
+							className={s.backgroundInputs}
 							type="text"
 							name="name"
 							value={state.name}
 							onChange={handleInputChange}
 							placeholder="Ingrese un nombre "
 						/>
-						<span>{error.name}</span>
+						<br />
+
+						<span className={s.spanErrors}>{error.name} </span>
 					</div>
 					<br />
 					{
@@ -227,7 +230,12 @@ export default function Form() {
 						null}
 					<div>
 						<label>⭐Rating: </label>
-						<select name="rating" value={state.rating} onChange={handleInputChange}>
+						<select
+							name="rating"
+							value={state.rating}
+							onChange={handleInputChange}
+							className={s.backgroundInputs}
+						>
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
@@ -237,18 +245,24 @@ export default function Form() {
 						{/* <span>{error.rating}</span> */}
 					</div>
 					<br />
-					
+
 					<div>
 						<label>📆Release: </label>
-						<input name="released" type="date" value={state.released} onChange={handleInputChange} />
+						<input
+							name="released"
+							type="date"
+							value={state.released}
+							onChange={handleInputChange}
+							className={s.backgroundInputs}
+						/>
 						<span>{error.released}</span>
 					</div>
 					<br />
 					<div>
-						<label>🔖Genres: </label>
 						<div>
-							<select name="genres" onChange={(e) => handleGenreChange(e)}>
-								<option>--Select genres--</option>
+							<label>🔖Genres: </label>
+							<select className={s.backgroundInputs} name="genres" onChange={(e) => handleGenreChange(e)}>
+								<option className={s.backgroundInputs} >--Select genres--</option>
 								{allGenres &&
 									allGenres.map((genre, i) => {
 										return <option key={i}>{genre}</option>;
@@ -269,10 +283,10 @@ export default function Form() {
 
 					<br />
 					<div>
-						<label> 🎮Platforms: </label>
 						<div>
-							<select name="platforms " onChange={(e) => handlePlatformsChange(e)}>
-								<option>--Select platforms--</option>
+							<label> 🎮Platforms: </label>
+							<select  className={s.backgroundInputs} name="platforms " onChange={(e) => handlePlatformsChange(e)}>
+								<option className={s.backgroundInputs} >--Select platforms--</option>
 								{allPlatforms &&
 									allPlatforms.map((platform, i) => {
 										return <option key={i}>{platform}</option>;
@@ -300,6 +314,7 @@ export default function Form() {
 							value={state.image}
 							onChange={handleInputChange}
 							placeholder="Ingrese la URL de la imagen"
+							className={s.backgroundInputs}
 						/>
 						<span>{error.image}</span>
 					</div>
@@ -310,12 +325,16 @@ export default function Form() {
 							name="description"
 							id=""
 							cols="30"
-							rows="10"
+							rows="5"
 							name="description"
+							// width="390px"
+							// heigth= "50px"
+							className={s.stileTextarea}
 							value={state.description}
 							onChange={handleInputChange}
 						/>
-						<span>{error.description}</span>
+						<br />
+						<span className={s.spanErrors}>{error.description}</span>
 					</div>
 					<br />
 					<button type="submit">Create Game</button>
