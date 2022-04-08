@@ -2,7 +2,9 @@
 	background-color: green;
 }
 .detailContainer {
-	background-image: url('https://i.imgur.com/lB8nTKr.jpeg');
+	background-image: url('https://www.wowchakra.com/wp-content/uploads/2019/11/WC3R_MainScreen.jpg');
+		/* url("https://i.3djuegos.com/juegos/12783/visage/fotos/maestras/visage-5306838.jpg"),
+		url("https://lamartina.com.mx/wp-content/uploads/2017/11/TER1-1024x640.jpg"); */
 	background-size: cover;
 	background-attachment: fixed;
 	background-position: center center;
@@ -13,39 +15,37 @@
 	height: 100%;
 }
 .leftContainer {
-	border-style: groove;
+	/* border-style: groove; */
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
 }
 .descriptionDiv {
-
 	float: right;
 	text-align: right;
-	border-style: groove;
+	/* border-style: groove; */
 	width: 50%;
 	height: 100%;
 	margin-top: 0%;
 	color: rgba(255, 255, 255, 0.794);
-    text-decoration:solid;
+	text-decoration: solid;
 	text-align: center;
-    line-height:30px;
-    text-justify: distribute;
+	line-height: 30px;
+	text-justify: distribute;
 	/* background-color: transparent; */
 }
 .cardContainer {
 	margin-top: 0%;
-	border-style: groove;
+	/* border-style: groove; */
 	float: left;
 	text-align: left;
 	/* float: right; */
 	border-radius: 18px;
 	background-color: transparent;
-    color: rgba(255, 255, 255, 0.794);
+	color: rgba(255, 255, 255, 0.794);
 	width: 44%;
 	/* height: 100%; */
-
 }
 .imageContainer {
 	border-radius: 18px;
@@ -54,20 +54,19 @@
 .tittle {
 	flex-basis: 100%;
 	text-align: center;
-    text-transform: capitalize;
-    text-underline-position: above;
+	text-transform: capitalize;
+	text-underline-position: above;
 	/* border-style: groove; */
 	padding-top: 0%;
 	color: rgba(240, 255, 255, 0.534);
 }
 
-.linkStyle{
-    text-align:left;
-    float: left;
-    padding-right: 25px;
+.linkStyle {
+	text-align: left;
+	float: left;
+	padding-right: 25px;
 	color: aliceblue;
 	padding-left: 1%;
 }
-.platformsDetail{
-	
+.platformsDetail {
 }
