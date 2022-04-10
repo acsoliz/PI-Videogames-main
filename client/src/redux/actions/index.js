@@ -25,7 +25,7 @@ export const getAllGames = () => {
 				payload : json.data
 			});
 		} catch (error) {
-			console.log(error);
+			console.log("error trayendo los videogames",error);
 		}
 	};
 };
