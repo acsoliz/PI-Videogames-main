@@ -12,9 +12,9 @@ export const ADD_GAME = 'ADD_GAME';
 export const DESTROY = 'DESTROY';
 export const BY_ALPH = 'BY_ALPH';
 export const API_PLATFORMS = '/platforms';
-const URL_NAME_GET = 'videogames/?name=';
+export const URL_NAME_GET = 'videogames/?name=';
 export const API_GENRES = '/genres';
-const URL_GET = '/videogames/';
+export const URL_GET = '/videogames/';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
