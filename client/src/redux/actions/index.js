@@ -14,7 +14,7 @@ export const BY_ALPH = 'BY_ALPH';
 export const API_PLATFORMS = '/platforms';
 export const URL_NAME_GET = 'videogames/?name=';
 export const API_GENRES = '/genres';
-export const URL_GET = '/videogames/';
+export const URL_GET = '/videogames';
 
 export const getAllGames = () => {
 	return async (dispatch) => {
